@@ -1,0 +1,74 @@
+
+# Notes:
+# - manually add Content-Type for empty posts
+# - change custom serializer to serialize annotated objects for kieserver
+#
+swagger: '2.0'
+info:
+  version: 0.1-SNAPSHOT
+  title: project
+host: localhost:8081
+basePath: /kie-server/services/rest
+schemes:
+  - http
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
+paths:
+  '/server/containers/{id}/processes/{pId}/instances':
+    post:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: id
+          in: path
+          required: true
+        - type: string
+          name: pId
+          in: path
+          required: true
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
+definitions: {}
