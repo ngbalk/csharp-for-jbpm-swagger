@@ -87,6 +87,13 @@ paths:
           name: tInstanceId
           in: path
           required: true
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+                type: string
       responses:
         '200':
           description: OK
@@ -171,7 +178,7 @@ definitions:
     type: object
     properties:
       task-id:
-        type: string
+        type: integer
       task-name:
         type: string
       task-subject:
