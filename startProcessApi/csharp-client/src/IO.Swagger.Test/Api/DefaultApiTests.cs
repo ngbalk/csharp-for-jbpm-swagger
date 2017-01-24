@@ -94,44 +94,14 @@ namespace IO.Swagger.Test
             Assert.IsInstanceOf<string> (response, "response is string");
         }
 
-        /// <summary>
-        /// Test ServerContainersIdProcessesPIdInstancesPostMapParams
-        /// </summary>
-        [Test]
-        public void ServerContainersIdProcessesPIdInstancesPostTestMapParams()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            string id = "SVMContainer";
-            string pId = "hellobpm.simpleProcessObject";
-            Person person = new Person();
-            person.name = "nick";
-            person.age = 23;
-            // var json = instance.Configuration.ApiClient.Serialize("svm.hello_bpm.Person",person);
-            // Console.WriteLine(json);
-            var classnameDict = new Dictionary<string, object>();
-            classnameDict.Add("svm.hello_bpm.Person", person);
-
-            var body = new Dictionary<string, object>();
-            body.Add("person", classnameDict);
-
-            var json = instance.Configuration.ApiClient.Serialize(body);
-            Console.WriteLine(json);
-
-            var response = instance.ServerContainersIdProcessesPIdInstancesPost(id, pId, body);
-            Assert.IsInstanceOf<string> (response, "response is string");
-        }
-
         [Test]
         public void CustomSerializerTest()
         {
-
             Person person = new Person();
             person.name = "nick";
             person.age = 23;
-
             var classnameDict = new Dictionary<string, object>();
             classnameDict.Add("person", person);
-
             var json = instance.Configuration.ApiClient.Serialize(classnameDict);
             Console.WriteLine(json);
         }
@@ -143,41 +113,11 @@ namespace IO.Swagger.Test
             Person person = new Person();
             person.name = "nick";
             person.age = 23;
-
             var processVars = new Dictionary<string, object>();
             processVars.Add("person", person);
-
             var response = instance.ServerContainersIdProcessesPIdInstancesPost(id, pId, processVars);
             Assert.IsInstanceOf<string> (response, "response is string");
         }
-
-        [Test]
-        public void GetTaskListTest()
-        {
-
-        }
-
-        [Test]
-        public void SerializeCustomPropertyTest()
-        {
-            var taskSummary = new TaskSummary();
-            var list = new List<Task>();
-
-            list.Add(new Task(){TaskId = "1"});
-
-            taskSummary.tasks = list;
-            var json = instance.Configuration.ApiClient.Serialize(taskSummary);
-            Console.WriteLine(json);
-
-
-            TaskSummary des = JsonConvert.DeserializeObject<TaskSummary>(json);
-
-
-            Console.WriteLine(des.tasks.Count);
-
-        }
-
-        
     }
 
 }

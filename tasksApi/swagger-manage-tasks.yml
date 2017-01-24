@@ -1,6 +1,8 @@
-# Example YAML to get you started quickly.
-# Be aware that YAML has indentation based scoping.
-# Code completion support is available so start typing for available options.
+
+# Notes:
+# 
+# - change custom serializer to serialize annotated objects for kieserver
+#
 swagger: '2.0'
 info:
   version: 0.1-SNAPSHOT
