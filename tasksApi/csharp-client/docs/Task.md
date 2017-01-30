@@ -3,7 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TaskId** | **string** |  | [optional] 
+**TaskId** | **int?** |  | [optional] 
 **TaskName** | **string** |  | [optional] 
 **TaskSubject** | **string** |  | [optional] 
 **TaskDescription** | **string** |  | [optional] 

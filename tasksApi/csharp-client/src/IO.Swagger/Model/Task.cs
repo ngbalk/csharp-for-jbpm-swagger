@@ -45,7 +45,7 @@ namespace IO.Swagger.Model
         /// <param name="TaskProcDefId">TaskProcDefId.</param>
         /// <param name="TaskContainerId">TaskContainerId.</param>
         /// <param name="TaskParentId">TaskParentId.</param>
-        public Task(int TaskId = default(int), string TaskName = default(string), string TaskSubject = default(string), string TaskDescription = default(string), string TaskStatus = default(string), int? TaskPriority = default(int?), bool? TaskIsSkipable = default(bool?), long? TaskCreatedOn = default(long?), long? TaskActivationTime = default(long?), int? TaskProcInstId = default(int?), string TaskProcDefId = default(string), string TaskContainerId = default(string), int? TaskParentId = default(int?))
+        public Task(int? TaskId = default(int?), string TaskName = default(string), string TaskSubject = default(string), string TaskDescription = default(string), string TaskStatus = default(string), int? TaskPriority = default(int?), bool? TaskIsSkipable = default(bool?), long? TaskCreatedOn = default(long?), long? TaskActivationTime = default(long?), int? TaskProcInstId = default(int?), string TaskProcDefId = default(string), string TaskContainerId = default(string), int? TaskParentId = default(int?))
         {
             this.TaskId = TaskId;
             this.TaskName = TaskName;
@@ -66,7 +66,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets TaskId
         /// </summary>
         [DataMember(Name="task-id", EmitDefaultValue=false)]
-        public int TaskId { get; set; }
+        public int? TaskId { get; set; }
         /// <summary>
         /// Gets or Sets TaskName
         /// </summary>

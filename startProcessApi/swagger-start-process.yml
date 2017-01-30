@@ -86,6 +86,9 @@ paths:
           name: id
           in: path
           required: true
+        - type: integer
+          name: status
+          in: query
       responses:
         '200':
           description: OK

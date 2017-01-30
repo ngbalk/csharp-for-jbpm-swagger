@@ -56,9 +56,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>string</returns>
-        string ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut (string containerId, int? tInstanceId, Object body);
+        string ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut (string containerId, int? tInstanceId, Object body = null);
 
         /// <summary>
         /// 
@@ -69,9 +69,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of string</returns>
-        ApiResponse<string> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutWithHttpInfo (string containerId, int? tInstanceId, Object body);
+        ApiResponse<string> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutWithHttpInfo (string containerId, int? tInstanceId, Object body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -162,9 +162,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>Task of string</returns>
-        System.Threading.Tasks.Task<string> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsync (string containerId, int? tInstanceId, Object body);
+        System.Threading.Tasks.Task<string> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsync (string containerId, int? tInstanceId, Object body = null);
 
         /// <summary>
         /// 
@@ -175,9 +175,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsyncWithHttpInfo (string containerId, int? tInstanceId, Object body);
+        System.Threading.Tasks.Task<ApiResponse<string>> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsyncWithHttpInfo (string containerId, int? tInstanceId, Object body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -520,9 +520,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>string</returns>
-        public string ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut (string containerId, int? tInstanceId, Object body)
+        public string ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut (string containerId, int? tInstanceId, Object body = null)
         {
              ApiResponse<string> localVarResponse = ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutWithHttpInfo(containerId, tInstanceId, body);
              return localVarResponse.Data;
@@ -534,7 +534,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of string</returns>
         public ApiResponse< string > ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutWithHttpInfo (string containerId, int? tInstanceId, Object body = null)
         {
@@ -544,7 +544,6 @@ namespace IO.Swagger.Api
             // verify the required parameter 'tInstanceId' is set
             if (tInstanceId == null)
                 throw new ApiException(400, "Missing required parameter 'tInstanceId' when calling DefaultApi->ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut");
-            // verify the required parameter 'body' is set
 
             var localVarPath = "/server/containers/{containerId}/tasks/{tInstanceId}/states/completed";
             var localVarPathParams = new Dictionary<String, String>();
@@ -615,9 +614,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>Task of string</returns>
-        public async System.Threading.Tasks.Task<string> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsync (string containerId, int? tInstanceId, Object body)
+        public async System.Threading.Tasks.Task<string> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsync (string containerId, int? tInstanceId, Object body = null)
         {
              ApiResponse<string> localVarResponse = await ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsyncWithHttpInfo(containerId, tInstanceId, body);
              return localVarResponse.Data;
@@ -630,9 +629,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
         /// <param name="tInstanceId"></param>
-        /// <param name="body"></param>
+        /// <param name="body"> (optional)</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<string>> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsyncWithHttpInfo (string containerId, int? tInstanceId, Object body)
+        public async System.Threading.Tasks.Task<ApiResponse<string>> ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAsyncWithHttpInfo (string containerId, int? tInstanceId, Object body = null)
         {
             // verify the required parameter 'containerId' is set
             if (containerId == null)
@@ -640,9 +639,6 @@ namespace IO.Swagger.Api
             // verify the required parameter 'tInstanceId' is set
             if (tInstanceId == null)
                 throw new ApiException(400, "Missing required parameter 'tInstanceId' when calling DefaultApi->ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut");
-            // verify the required parameter 'body' is set
-            if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling DefaultApi->ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut");
 
             var localVarPath = "/server/containers/{containerId}/tasks/{tInstanceId}/states/completed";
             var localVarPathParams = new Dictionary<String, String>();

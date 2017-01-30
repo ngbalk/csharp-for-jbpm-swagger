@@ -20,9 +20,6 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Xml;
-using System.Xml.Linq;
-using IO.Swagger.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -37,8 +34,6 @@ namespace IO.Swagger.Client
     /// </summary>
     public partial class ApiClient
     {
-
-
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
@@ -103,11 +98,13 @@ namespace IO.Swagger.Client
         [Obsolete("ApiClient.Default is deprecated, please use 'Configuration.Default.ApiClient' instead.")]
         public static ApiClient Default;
 
-        private Dictionary<string, Type> typeRegistry = new Dictionary<string, Type>();
+        private Dictionary<string, Type> javaClassToTypeRegistry = new Dictionary<string, Type>();
+        private Dictionary<Type, string> typeToJavaClassRegistry = new Dictionary<Type, string>();
 
         public void AddToTypeRegistry(string customName, Type type)
         {
-            typeRegistry.Add(customName, type);
+            javaClassToTypeRegistry.Add(customName, type);
+            typeToJavaClassRegistry.Add(type, customName);
         }
 
         /// <summary>
@@ -342,14 +339,13 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, typeof(ExpandoObject), new CustomObjectTypeDeserializer(typeRegistry));
+                return JsonConvert.DeserializeObject(response.Content, type, new CustomObjectTypeDeserializer(javaClassToTypeRegistry));
             }
             catch (Exception e)
             {
                 throw new ApiException(500, e.Message);
             }
         }
-
 
         /// <summary>
         /// Serialize an input (model) into JSON string
@@ -358,7 +354,7 @@ namespace IO.Swagger.Client
         /// <returns>JSON string.</returns>
         public String Serialize(object obj)
         {
-            var customSerializer = new CustomObjectTypeSerializer();
+            var customSerializer = new CustomObjectTypeSerializer(typeToJavaClassRegistry);
             try
             {
                 return obj != null ? JsonConvert.SerializeObject(obj, customSerializer) : null;
@@ -368,6 +364,7 @@ namespace IO.Swagger.Client
                 throw new ApiException(500, e.Message);
             }
         }
+
 
         /// <summary>
         /// Select the Content-Type header's value from the given content-type array:
@@ -507,21 +504,20 @@ namespace IO.Swagger.Client
 
 
 
-
-
-
 public class CustomObjectTypeSerializer : JsonConverter
 {
+    private Dictionary<Type, string> typeRegistry;
+
+    public CustomObjectTypeSerializer(Dictionary<Type, string> typeRegistry)
+    {
+        this.typeRegistry = typeRegistry;
+    }
+
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-        var attribute = value.GetType().GetCustomAttribute<JsonObjectAttribute>();
-        var attributeValue = attribute.Title;
-        if (attributeValue == null)
-        {
-            throw new ArgumentNullException("JsonObject attribute Title cannot be null", "Title");
-        }
+        var attribute = typeRegistry[value.GetType()];
         JObject obj = new JObject();
-        obj.Add(attributeValue,JToken.FromObject(value));
+        obj.Add(attribute,JToken.FromObject(value));
         obj.WriteTo(writer);
     }
 
@@ -532,13 +528,9 @@ public class CustomObjectTypeSerializer : JsonConverter
 
     public override bool CanConvert(Type objectType)
     {
-        return objectType.IsDefined(typeof(JsonObjectAttribute), false);
+        return typeRegistry.ContainsKey(objectType);
     }
 }
-
-
-
-
 
 
 
@@ -560,6 +552,7 @@ public class CustomObjectTypeDeserializer : JsonConverter
 
     public override bool CanConvert(Type objectType)
     {
+//        return objectType == typeof(object);
         return true;
     }
 
@@ -572,6 +565,7 @@ public class CustomObjectTypeDeserializer : JsonConverter
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
         JsonSerializer serializer)
     {
+        Console.WriteLine("start read json");
         // deserialize JSON to Dictionary object
         IDictionary<string,object> result = (IDictionary<string,object>) ReadValue(reader);
 
@@ -590,7 +584,8 @@ public class CustomObjectTypeDeserializer : JsonConverter
                     throw new Exception(javaClassName + " is not registered in the TypeRegistry");
                 }
                 Type type = typeRegistry[javaClassName];
-
+                Console.WriteLine(type);
+                Console.WriteLine("read json");
                 // serialize and deserialize into correct C# object
                 String serializedJson = JsonConvert.SerializeObject(result[propertyName]);
                 object deserializedObject = JsonConvert.DeserializeObject(serializedJson, type);

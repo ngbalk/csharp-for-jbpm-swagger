@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 <a name="servercontainerscontaineridtaskstinstanceidstatescompletedput"></a>
 # **ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut**
-> string ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut (string containerId, int? tInstanceId, Object body)
+> string ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut (string containerId, int? tInstanceId, Object body = null)
 
 
 
@@ -103,7 +103,7 @@ namespace Example
             var apiInstance = new DefaultApi();
             var containerId = containerId_example;  // string | 
             var tInstanceId = 56;  // int? | 
-            var body = ;  // Object | 
+            var body = ;  // Object |  (optional) 
 
             try
             {
@@ -125,7 +125,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **containerId** | **string**|  | 
  **tInstanceId** | **int?**|  | 
- **body** | **Object**|  | 
+ **body** | **Object**|  | [optional] 
 
 ### Return type
 

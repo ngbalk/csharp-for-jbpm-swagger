@@ -550,7 +550,18 @@ public class CustomObjectTypeSerializer : JsonConverter
 
     public override bool CanConvert(Type objectType)
     {
-        return typeRegistry.ContainsKey(objectType);
+        // is a native system type
+        if (objectType.Namespace.StartsWith("System"))
+        {
+            return false;
+        }
+        // type was not registered
+        if (!typeRegistry.ContainsKey(objectType))
+        {
+            throw new Exception(objectType + " is not registered.  You must register it in the TypeRegistry");
+        }
+        return true;
+    }
     }
 }
 

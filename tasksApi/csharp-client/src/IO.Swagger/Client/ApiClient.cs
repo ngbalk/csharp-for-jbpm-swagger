@@ -11,6 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
@@ -20,7 +21,10 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Utilities;
 using RestSharp;
 
 namespace IO.Swagger.Client
@@ -94,6 +98,15 @@ namespace IO.Swagger.Client
         [Obsolete("ApiClient.Default is deprecated, please use 'Configuration.Default.ApiClient' instead.")]
         public static ApiClient Default;
 
+        private Dictionary<string, Type> javaClassToTypeRegistry = new Dictionary<string, Type>();
+        private Dictionary<Type, string> typeToJavaClassRegistry = new Dictionary<Type, string>();
+
+        public void AddToTypeRegistry(string customName, Type type)
+        {
+            javaClassToTypeRegistry.Add(customName, type);
+            typeToJavaClassRegistry.Add(type, customName);
+        }
+
         /// <summary>
         /// Gets or sets the Configuration.
         /// </summary>
@@ -148,7 +161,9 @@ namespace IO.Swagger.Client
                     request.AddParameter(contentType, postBody, ParameterType.RequestBody);
                 }
             }
-
+            else{
+                request.AddHeader("Content-Type", contentType);
+            }
             return request;
         }
 
@@ -324,7 +339,7 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                return JsonConvert.DeserializeObject(response.Content, type, new CustomObjectTypeDeserializer(javaClassToTypeRegistry));
             }
             catch (Exception e)
             {
@@ -339,7 +354,7 @@ namespace IO.Swagger.Client
         /// <returns>JSON string.</returns>
         public String Serialize(object obj)
         {
-            var customSerializer = new CustomerObjectTypeSerializer();
+            var customSerializer = new CustomObjectTypeSerializer(typeToJavaClassRegistry);
             try
             {
                 return obj != null ? JsonConvert.SerializeObject(obj, customSerializer) : null;
@@ -350,31 +365,6 @@ namespace IO.Swagger.Client
             }
         }
 
-        public class CustomerObjectTypeSerializer : JsonConverter
-        {
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                var attribute = value.GetType().GetCustomAttribute<Newtonsoft.Json.JsonObjectAttribute>();
-                var attributeValue = attribute.Title;
-                if (attributeValue == null)
-                {
-                    throw new ArgumentNullException("JsonObject attribute Title cannot be null", "Title");
-                }
-                JObject obj = new JObject();
-                obj.Add(attributeValue,JToken.FromObject(value));
-                obj.WriteTo(writer);
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override bool CanConvert(Type objectType)
-            {
-                return objectType.IsDefined(typeof(Newtonsoft.Json.JsonObjectAttribute), false);
-            }
-        }
 
         /// <summary>
         /// Select the Content-Type header's value from the given content-type array:
@@ -508,4 +498,231 @@ namespace IO.Swagger.Client
             }
         }
     }
+}
+
+
+
+
+
+public class CustomObjectTypeSerializer : JsonConverter
+{
+    private Dictionary<Type, string> typeRegistry;
+
+    public CustomObjectTypeSerializer(Dictionary<Type, string> typeRegistry)
+    {
+        this.typeRegistry = typeRegistry;
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        var attribute = typeRegistry[value.GetType()];
+        JObject obj = new JObject();
+        obj.Add(attribute,JToken.FromObject(value));
+        obj.WriteTo(writer);
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool CanConvert(Type objectType)
+    {
+        // is a native system type
+        if (objectType.Namespace.StartsWith("System"))
+        {
+            return false;
+        }
+        // type was not registered
+        if (!typeRegistry.ContainsKey(objectType))
+        {
+            throw new Exception(objectType + " is not registered.  You must register it in the TypeRegistry");
+        }
+        return true;
+    }
+}
+
+
+
+
+
+public class CustomObjectTypeDeserializer : JsonConverter
+
+{
+    private Stack<object> propertyStk;
+    private Dictionary<string, Type> typeRegistry;
+    Dictionary<String,String> nameJavaClassMapping;
+
+    public CustomObjectTypeDeserializer(Dictionary<string, Type> typeRegistry)
+    {
+        this.typeRegistry = typeRegistry;
+        propertyStk = new Stack<object>();
+        nameJavaClassMapping = new Dictionary<string, string>();
+    }
+
+    public override bool CanConvert(Type objectType)
+    {
+        return objectType == typeof(object);
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+        JsonSerializer serializer)
+    {
+        // deserialize JSON to Dictionary object
+        IDictionary<string,object> result = (IDictionary<string,object>) ReadValue(reader);
+
+        IDictionary<string,object> returnObject = new ExpandoObject();
+
+        foreach (var propertyName in result.Keys)
+        {
+            // is custom object
+            if (nameJavaClassMapping.ContainsKey(propertyName))
+            {
+
+                // determine C# Type from property name
+                string javaClassName = nameJavaClassMapping[propertyName];
+                if (!typeRegistry.ContainsKey(javaClassName))
+                {
+                    throw new Exception(javaClassName + " is not registered in the TypeRegistry");
+                }
+                Type type = typeRegistry[javaClassName];
+
+                // serialize and deserialize into correct C# object
+                String serializedJson = JsonConvert.SerializeObject(result[propertyName]);
+                object deserializedObject = JsonConvert.DeserializeObject(serializedJson, type);
+                returnObject.Add(propertyName, deserializedObject);
+            }
+            // is atomic type
+            else
+            {
+                returnObject.Add(propertyName, result[propertyName]);
+            }
+        }
+        return returnObject;
+    }
+
+    private object ReadValue(JsonReader reader)
+    {
+        if (!MoveToContent(reader))
+            throw new Exception("Unexpected end when reading ExpandoObject.");
+        switch (reader.TokenType)
+        {
+            case JsonToken.StartObject:
+                return ReadObject(reader);
+            case JsonToken.StartArray:
+                return ReadList(reader);
+            default:
+                if (IsPrimitiveToken(reader.TokenType))
+                    return reader.Value;
+                throw new Exception("Unexpected token when converting ExpandoObject: {0}");
+        }
+    }
+
+    private object ReadList(JsonReader reader)
+    {
+        IList<object> objectList = new List<object>();
+        while (reader.Read())
+        {
+            switch (reader.TokenType)
+            {
+                case JsonToken.Comment:
+                    continue;
+                case JsonToken.EndArray:
+                    return objectList;
+                default:
+                    object obj = ReadValue(reader);
+                    objectList.Add(obj);
+                    continue;
+            }
+        }
+        throw new Exception("Unexpected end when reading ExpandoObject.");
+    }
+
+    private object ReadObject(JsonReader reader)
+    {
+        IDictionary<string, object> dictionary = new ExpandoObject();
+        while (reader.Read())
+        {
+            switch (reader.TokenType)
+            {
+                case JsonToken.PropertyName:
+                    string index = reader.Value.ToString();
+
+                    // keep track of properties within object as we traverse JSON
+                    propertyStk.Push(index);
+
+                    // check if this property is special custom Java class name property
+                    Boolean isCustomProp = typeRegistry.ContainsKey(index);
+
+                    if (!reader.Read())
+                        throw new Exception("Unexpected end when reading ExpandoObject.");
+
+                    // recursively get value of nested objects
+                    object nestedValue = ReadValue(reader);
+
+                    propertyStk.Pop();
+
+                    if (isCustomProp)
+                    {
+                        // stack contains the top level variable name
+                        if (propertyStk.Count == 1)
+                        {
+                            nameJavaClassMapping.Add(propertyStk.Peek().ToString(), index);
+                        }
+
+                        // flat-add dictionary values to ignore custom Java class name property
+                        IDictionary<string, object> tmpDictionary = (IDictionary<string, object>) nestedValue;
+                        foreach (var kvp in tmpDictionary)
+                        {
+                            dictionary.Add(kvp);
+                        }
+                    }
+                    else
+                    {
+                        dictionary[index] = nestedValue;
+                    }
+                    continue;
+                case JsonToken.EndObject:
+                    return dictionary;
+                default:
+                    continue;
+            }
+        }
+        throw new Exception("Unexpected end when reading ExpandoObject.");
+    }
+
+    private static bool IsPrimitiveToken(JsonToken token)
+    {
+        switch (token)
+        {
+            case JsonToken.Integer:
+            case JsonToken.Float:
+            case JsonToken.String:
+            case JsonToken.Boolean:
+            case JsonToken.Null:
+            case JsonToken.Undefined:
+            case JsonToken.Date:
+            case JsonToken.Bytes:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private bool MoveToContent(JsonReader reader)
+    {
+        for (JsonToken tokenType = reader.TokenType; tokenType == JsonToken.None || tokenType == JsonToken.Comment; tokenType = reader.TokenType)
+        {
+            if (!reader.Read())
+                return false;
+        }
+        return true;
+    }
+
 }
