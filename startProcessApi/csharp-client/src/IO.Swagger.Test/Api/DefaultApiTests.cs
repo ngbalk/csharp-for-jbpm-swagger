@@ -20,7 +20,6 @@ using NUnit.Framework;
 using IO.Swagger.Client;
 using IO.Swagger.Api;
 using IO.Swagger.Model;
-using Newtonsoft.Json;
 
 namespace IO.Swagger.Test
 {
@@ -44,8 +43,7 @@ namespace IO.Swagger.Test
         {
             instance = new DefaultApi();
             instance.Configuration.Username = "kieserver";
-            instance.Configuration.Password = "kieserver1!";
-        }
+            instance.Configuration.Password = "kieserver1!";        }
 
         /// <summary>
         /// Clean up after each unit test
@@ -68,56 +66,32 @@ namespace IO.Swagger.Test
 
         
         /// <summary>
-        /// Test ServerContainersIdProcessesPIdInstancesPostNoParams
+        /// Test ServerContainersIdProcessesPIdInstancesPost
         /// </summary>
         [Test]
-        public void ServerContainersIdProcessesPIdInstancesPostTestNoParams()
+        public void ServerContainersIdProcessesPIdInstancesPostTest()
         {
-            string id = "SVMContainer";
-            string pId = "hellobpm.simpleProcess";
-            Object body = null;
-            var response = instance.ServerContainersIdProcessesPIdInstancesPost(id, pId, body);
-            Assert.IsInstanceOf<string> (response, "response is string");
+            // TODO uncomment below to test the method and replace null with proper value
+            //string id = null;
+            //string pId = null;
+            //Object body = null;
+            //var response = instance.ServerContainersIdProcessesPIdInstancesPost(id, pId, body);
+            //Assert.IsInstanceOf<string> (response, "response is string");
         }
-
+        
         /// <summary>
-        /// Test ServerContainersIdProcessesPIdInstancesPostAtomicParams
+        /// Test ServerQueriesContainersIdProcessInstancesGet
         /// </summary>
         [Test]
-        public void ServerContainersIdProcessesPIdInstancesPostTestAtomicParams()
+        public void ServerQueriesContainersIdProcessInstancesGetTest()
         {
+
             string id = "SVMContainer";
-            string pId = "hellobpm.simpleProcessAtomic";
-            var body = new Dictionary<String, String>();
-            body.Add("myString", "this is my string");
-            var response = instance.ServerContainersIdProcessesPIdInstancesPost(id, pId, body);
-            Assert.IsInstanceOf<string> (response, "response is string");
+            ProcessInstanceList response = (ProcessInstanceList) instance.ServerQueriesContainersIdProcessInstancesGet(id);
+            Console.WriteLine(response.ProcessInstance[0].ToString());
+            Assert.IsInstanceOf<ProcessInstanceList> (response, "response is ProcessInstanceList");
         }
-
-        [Test]
-        public void CustomSerializerTest()
-        {
-            Person person = new Person();
-            person.name = "nick";
-            person.age = 23;
-            var classnameDict = new Dictionary<string, object>();
-            classnameDict.Add("person", person);
-            var json = instance.Configuration.ApiClient.Serialize(classnameDict);
-            Console.WriteLine(json);
-        }
-
-        [Test]
-        public void StartProcessWithCustomSerializedObjectTest()
-        {   string id = "SVMContainer";
-            string pId = "hellobpm.simpleProcessObject";
-            Person person = new Person();
-            person.name = "nick";
-            person.age = 23;
-            var processVars = new Dictionary<string, object>();
-            processVars.Add("person", person);
-            var response = instance.ServerContainersIdProcessesPIdInstancesPost(id, pId, processVars);
-            Assert.IsInstanceOf<string> (response, "response is string");
-        }
+        
     }
 
 }

@@ -74,18 +74,17 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new DefaultApi();
-            var id = id_example;  // string | 
-            var pId = pId_example;  // string | 
-            var body = ;  // Object |  (optional) 
+            var containerId = containerId_example;  // string | 
+            var pInstanceId = 56;  // int? | 
 
             try
             {
-                string result = apiInstance.ServerContainersIdProcessesPIdInstancesPost(id, pId, body);
+                Object result = apiInstance.ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet(containerId, pInstanceId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.ServerContainersIdProcessesPIdInstancesPost: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet: " + e.Message );
             }
         }
     }
@@ -99,15 +98,12 @@ All URIs are relative to *http://localhost:8081/kie-server/services/rest*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**ServerContainersIdProcessesPIdInstancesPost**](docs/DefaultApi.md#servercontainersidprocessespidinstancespost) | **POST** /server/containers/{id}/processes/{pId}/instances | 
-*DefaultApi* | [**ServerQueriesContainersIdProcessInstancesGet**](docs/DefaultApi.md#serverqueriescontainersidprocessinstancesget) | **GET** /server/queries/containers/{id}/process/instances | 
+*DefaultApi* | [**ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet**](docs/DefaultApi.md#servercontainerscontaineridprocessesinstancespinstanceidvariablesget) | **GET** /server/containers/{containerId}/processes/instances/{pInstanceId}/variables | 
 
 
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
- - [Model.ProcessInstance](docs/ProcessInstance.md)
- - [Model.ProcessInstanceList](docs/ProcessInstanceList.md)
 
 
 <a name="documentation-for-authorization"></a>

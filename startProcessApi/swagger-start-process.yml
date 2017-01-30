@@ -70,5 +70,73 @@ paths:
               type: string
           schema:
             type: string
+
+  '/server/queries/containers/{id}/process/instances':
+    get:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: "#/definitions/ProcessInstances"
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
             
-definitions: {}
+definitions:
+  ProcessInstances:
+    type: object
+    properties:
+      process-instance:
+        type: array
+        items:
+          $ref: "#/definitions/ProcessInstance"
+          
+  ProcessInstance:
+    type: object
+    properties:
+      initiator:
+        type: string
+      process-instance-id:
+        type: integer
+      process-id:
+        type: string
+      process-name:
+        type: string
+      process-version:
+        type: string
+      process-instance-state:
+        type: integer
+      container-id:
+        type: string
+      start-date:
+        type: string
+      process-instance-desc:
+        type: string
+      correlation-key:
+        type: string
+      parent-instance-id:
+        type: integer
