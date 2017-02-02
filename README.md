@@ -10,7 +10,8 @@ Use this project to generate csharp clients for interacting with the KieServer i
 * start a task
 * complete a task
 
-Generate a client 
+
+### How to generate a client 
 
 Command:
 
