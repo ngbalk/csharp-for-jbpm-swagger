@@ -16,5 +16,5 @@ Use this project to generate csharp clients for interacting with the KieServer i
 Command:
 
 ```sh
-$ java -jar swagger-codegen-cli.jar generate -l csharp -t csharp-api-templates/ -i swagger-manage-tasks.yml -o /location/for/generated/code
+$ java -jar swagger-codegen-cli.jar generate -l csharp -t csharp-api-templates/ -i swagger-manage-tasks.yml -o /location/for/generated/code --api-package Generated.Api.Package.Name --model-package Generated.Model.Package.Name
 ```
