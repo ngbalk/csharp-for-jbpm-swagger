@@ -20,6 +20,7 @@ using NUnit.Framework;
 using IO.Swagger.Client;
 using IO.Swagger.Api;
 using IO.Swagger.Model;
+using Newtonsoft.Json;
 
 namespace IO.Swagger.Test
 {
@@ -43,7 +44,9 @@ namespace IO.Swagger.Test
         {
             instance = new DefaultApi();
             instance.Configuration.Username = "kieserver";
-            instance.Configuration.Password = "kieserver1!";        }
+            instance.Configuration.Password = "kieserver1!";
+
+        }
 
         /// <summary>
         /// Clean up after each unit test
@@ -85,13 +88,41 @@ namespace IO.Swagger.Test
         [Test]
         public void ServerQueriesContainersIdProcessInstancesGetTest()
         {
-
             string id = "SVMContainer";
-            ProcessInstanceList response = (ProcessInstanceList) instance.ServerQueriesContainersIdProcessInstancesGet(id);
-            Console.WriteLine(response.ProcessInstance[0].ToString());
-            Assert.IsInstanceOf<ProcessInstanceList> (response, "response is ProcessInstanceList");
+            ProcessInstances response =  instance.ServerQueriesContainersIdProcessInstancesGet(id);
+            Assert.IsInstanceOf<ProcessInstances> (response, "response is ProcessInstanceList");
+            Console.WriteLine(response.ProcessInstance[0]);
         }
-        
+
+        [Test]
+        public void GetContainersTest()
+        {
+            KieContainersStatus kcs = instance.ServerContainersGet();
+            Console.WriteLine(kcs.Result.KieContainers.KieContainer[0].Messages[0].Timestamp);
+            Assert.IsInstanceOf<KieContainersStatus>(kcs, "reponse is KieContainerStatus");
+        }
+
+        [Test]
+        public void serializeDateTimeTest()
+        {
+            Dictionary<string,object> dict = new Dictionary<string, object>();
+            dict.Add("day","christmas");
+            dict.Add("date",new DateTime(2017,12,25));
+            var res = JsonConvert.SerializeObject(dict, new CustomObjectTypeSerializer( new Dictionary<Type, string>()));
+            Console.WriteLine(res);
+        }
+
+        [Test]
+        public void deserializeDateTimeTest()
+        {
+            dynamic res = JsonConvert.DeserializeObject("{'day':'christmas','date':1514160000000.0}", typeof(object),
+            new CustomObjectTypeDeserializer(new Dictionary<string, Type>()));
+            Console.WriteLine(res.day);
+            Console.WriteLine(res.date);
+        }
+
+
+
     }
 
 }

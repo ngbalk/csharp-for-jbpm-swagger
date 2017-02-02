@@ -31,6 +31,25 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>KieContainersStatus</returns>
+        KieContainersStatus ServerContainersGet ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of KieContainersStatus</returns>
+        ApiResponse<KieContainersStatus> ServerContainersGetWithHttpInfo ();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <param name="pId"></param>
         /// <param name="body"> (optional)</param>
@@ -57,8 +76,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>ProcessInstanceList</returns>
-        ProcessInstanceList ServerQueriesContainersIdProcessInstancesGet (string id);
+        /// <param name="status"> (optional)</param>
+        /// <returns>ProcessInstances</returns>
+        ProcessInstances ServerQueriesContainersIdProcessInstancesGet (string id, int? status = null);
 
         /// <summary>
         /// 
@@ -68,10 +88,30 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of ProcessInstanceList</returns>
-        ApiResponse<ProcessInstanceList> ServerQueriesContainersIdProcessInstancesGetWithHttpInfo (string id);
+        /// <param name="status"> (optional)</param>
+        /// <returns>ApiResponse of ProcessInstances</returns>
+        ApiResponse<ProcessInstances> ServerQueriesContainersIdProcessInstancesGetWithHttpInfo (string id, int? status = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of KieContainersStatus</returns>
+        System.Threading.Tasks.Task<KieContainersStatus> ServerContainersGetAsync ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (KieContainersStatus)</returns>
+        System.Threading.Tasks.Task<ApiResponse<KieContainersStatus>> ServerContainersGetAsyncWithHttpInfo ();
         /// <summary>
         /// 
         /// </summary>
@@ -105,8 +145,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>Task of ProcessInstanceList</returns>
-        System.Threading.Tasks.Task<ProcessInstanceList> ServerQueriesContainersIdProcessInstancesGetAsync (string id);
+        /// <param name="status"> (optional)</param>
+        /// <returns>Task of ProcessInstances</returns>
+        System.Threading.Tasks.Task<ProcessInstances> ServerQueriesContainersIdProcessInstancesGetAsync (string id, int? status = null);
 
         /// <summary>
         /// 
@@ -116,8 +157,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>Task of ApiResponse (ProcessInstanceList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProcessInstanceList>> ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo (string id);
+        /// <param name="status"> (optional)</param>
+        /// <returns>Task of ApiResponse (ProcessInstances)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ProcessInstances>> ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo (string id, int? status = null);
         #endregion Asynchronous Operations
     }
 
@@ -228,6 +270,154 @@ namespace IO.Swagger.Api
         public void AddDefaultHeader(string key, string value)
         {
             this.Configuration.AddDefaultHeader(key, value);
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>KieContainersStatus</returns>
+        public KieContainersStatus ServerContainersGet ()
+        {
+             ApiResponse<KieContainersStatus> localVarResponse = ServerContainersGetWithHttpInfo();
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of KieContainersStatus</returns>
+        public ApiResponse< KieContainersStatus > ServerContainersGetWithHttpInfo ()
+        {
+
+            var localVarPath = "/server/containers";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (basicAuth) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(Configuration.Username) || !String.IsNullOrEmpty(Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
+            }
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ServerContainersGet", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<KieContainersStatus>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (KieContainersStatus) Configuration.ApiClient.Deserialize(localVarResponse, typeof(KieContainersStatus)));
+            
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of KieContainersStatus</returns>
+        public async System.Threading.Tasks.Task<KieContainersStatus> ServerContainersGetAsync ()
+        {
+             ApiResponse<KieContainersStatus> localVarResponse = await ServerContainersGetAsyncWithHttpInfo();
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (KieContainersStatus)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<KieContainersStatus>> ServerContainersGetAsyncWithHttpInfo ()
+        {
+
+            var localVarPath = "/server/containers";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (basicAuth) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(Configuration.Username) || !String.IsNullOrEmpty(Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ServerContainersGet", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<KieContainersStatus>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (KieContainersStatus) Configuration.ApiClient.Deserialize(localVarResponse, typeof(KieContainersStatus)));
+            
         }
 
         /// <summary>
@@ -427,10 +617,11 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>ProcessInstanceList</returns>
-        public ProcessInstanceList ServerQueriesContainersIdProcessInstancesGet (string id)
+        /// <param name="status"> (optional)</param>
+        /// <returns>ProcessInstances</returns>
+        public ProcessInstances ServerQueriesContainersIdProcessInstancesGet (string id, int? status = null)
         {
-             ApiResponse<ProcessInstanceList> localVarResponse = ServerQueriesContainersIdProcessInstancesGetWithHttpInfo(id);
+             ApiResponse<ProcessInstances> localVarResponse = ServerQueriesContainersIdProcessInstancesGetWithHttpInfo(id, status);
              return localVarResponse.Data;
         }
 
@@ -439,8 +630,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of ProcessInstanceList</returns>
-        public ApiResponse< ProcessInstanceList > ServerQueriesContainersIdProcessInstancesGetWithHttpInfo (string id)
+        /// <param name="status"> (optional)</param>
+        /// <returns>ApiResponse of ProcessInstances</returns>
+        public ApiResponse< ProcessInstances > ServerQueriesContainersIdProcessInstancesGetWithHttpInfo (string id, int? status = null)
         {
             // verify the required parameter 'id' is set
             if (id == null)
@@ -474,6 +666,7 @@ namespace IO.Swagger.Api
             // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
             localVarPathParams.Add("format", "json");
             if (id != null) localVarPathParams.Add("id", Configuration.ApiClient.ParameterToString(id)); // path parameter
+            if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
 
             // authentication (basicAuth) required
             // http basic authentication required
@@ -496,9 +689,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ProcessInstanceList>(localVarStatusCode,
+            return new ApiResponse<ProcessInstances>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ProcessInstanceList) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessInstanceList)));
+                (ProcessInstances) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessInstances)));
             
         }
 
@@ -507,10 +700,11 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>Task of ProcessInstanceList</returns>
-        public async System.Threading.Tasks.Task<ProcessInstanceList> ServerQueriesContainersIdProcessInstancesGetAsync (string id)
+        /// <param name="status"> (optional)</param>
+        /// <returns>Task of ProcessInstances</returns>
+        public async System.Threading.Tasks.Task<ProcessInstances> ServerQueriesContainersIdProcessInstancesGetAsync (string id, int? status = null)
         {
-             ApiResponse<ProcessInstanceList> localVarResponse = await ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo(id);
+             ApiResponse<ProcessInstances> localVarResponse = await ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo(id, status);
              return localVarResponse.Data;
 
         }
@@ -520,8 +714,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
-        /// <returns>Task of ApiResponse (ProcessInstanceList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ProcessInstanceList>> ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo (string id)
+        /// <param name="status"> (optional)</param>
+        /// <returns>Task of ApiResponse (ProcessInstances)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ProcessInstances>> ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo (string id, int? status = null)
         {
             // verify the required parameter 'id' is set
             if (id == null)
@@ -555,6 +750,7 @@ namespace IO.Swagger.Api
             // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
             localVarPathParams.Add("format", "json");
             if (id != null) localVarPathParams.Add("id", Configuration.ApiClient.ParameterToString(id)); // path parameter
+            if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
 
             // authentication (basicAuth) required
             // http basic authentication required
@@ -576,9 +772,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ProcessInstanceList>(localVarStatusCode,
+            return new ApiResponse<ProcessInstances>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ProcessInstanceList) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessInstanceList)));
+                (ProcessInstances) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessInstances)));
             
         }
 

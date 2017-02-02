@@ -515,10 +515,22 @@ public class CustomObjectTypeSerializer : JsonConverter
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-        var attribute = typeRegistry[value.GetType()];
-        JObject obj = new JObject();
-        obj.Add(attribute,JToken.FromObject(value));
-        obj.WriteTo(writer);
+        // handle DateTime custom serialization to Java formatted
+        if (value.GetType() == typeof(DateTime))
+        {
+            DateTime dt = (DateTime) value;
+            TimeSpan t = dt - new DateTime(1970, 1, 1);
+            double millisSinceEpoch = t.TotalMilliseconds;
+            serializer.Serialize(writer, millisSinceEpoch);
+        }
+        // handle custom object serialization
+        else
+        {
+            var attribute = typeRegistry[value.GetType()];
+            JObject obj = new JObject();
+            obj.Add(attribute,JToken.FromObject(value));
+            obj.WriteTo(writer);
+        }
     }
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -528,7 +540,17 @@ public class CustomObjectTypeSerializer : JsonConverter
 
     public override bool CanConvert(Type objectType)
     {
-        return typeRegistry.ContainsKey(objectType);
+        Console.WriteLine(objectType);
+        if (objectType == typeof(DateTime))
+        {
+
+            return true;
+        }
+        if (typeRegistry.ContainsKey(objectType))
+        {
+            return true;
+        }
+        return false;
     }
 }
 
@@ -609,7 +631,16 @@ public class CustomObjectTypeDeserializer : JsonConverter
                 return ReadList(reader);
             default:
                 if (IsPrimitiveToken(reader.TokenType))
+                {
+                    // handle DateTime case based on '*date*' or 'timestamp' when atomic
+                    if (propertyStk.Count == 1 && (propertyStk.Peek().ToString().ToLower().Contains("date") || propertyStk.Peek().ToString().ToLower() == "timestamp"))
+                    {
+                        var t = long.Parse(reader.Value.ToString());
+                        return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(t);
+                    }
                     return reader.Value;
+
+                }
                 throw new Exception("Unexpected token when converting ExpandoObject: {0}");
         }
     }
@@ -714,5 +745,32 @@ public class CustomObjectTypeDeserializer : JsonConverter
         }
         return true;
     }
-
 }
+
+
+
+
+public class DateTimeConverter : JsonConverter
+{
+    public override bool CanConvert(Type objectType)
+    {
+        return objectType == typeof(DateTime?);
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        var t = long.Parse(reader.Value.ToString());
+        return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(t);
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        DateTime dt = (DateTime) value;
+        TimeSpan t = dt - new DateTime(1970, 1, 1);
+        double millisSinceEpoch = t.TotalMilliseconds;
+        serializer.Serialize(writer, millisSinceEpoch);
+
+    }
+}
+
+

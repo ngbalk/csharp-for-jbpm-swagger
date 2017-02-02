@@ -91,6 +91,9 @@ this.{{name}} = {{name}};
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
+        {{#isDateTime}}
+        [JsonConverter(typeof(DateTimeConverter))]
+        {{/isDateTime}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{emitDefaultValue}})]
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
         {{/isEnum}}

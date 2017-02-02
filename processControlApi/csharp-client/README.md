@@ -74,18 +74,15 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new DefaultApi();
-            var id = id_example;  // string | 
-            var pId = pId_example;  // string | 
-            var body = ;  // Object |  (optional) 
 
             try
             {
-                string result = apiInstance.ServerContainersIdProcessesPIdInstancesPost(id, pId, body);
+                KieContainersStatus result = apiInstance.ServerContainersGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.ServerContainersIdProcessesPIdInstancesPost: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.ServerContainersGet: " + e.Message );
             }
         }
     }
@@ -99,6 +96,7 @@ All URIs are relative to *http://localhost:8081/kie-server/services/rest*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**ServerContainersGet**](docs/DefaultApi.md#servercontainersget) | **GET** /server/containers | 
 *DefaultApi* | [**ServerContainersIdProcessesPIdInstancesPost**](docs/DefaultApi.md#servercontainersidprocessespidinstancespost) | **POST** /server/containers/{id}/processes/{pId}/instances | 
 *DefaultApi* | [**ServerQueriesContainersIdProcessInstancesGet**](docs/DefaultApi.md#serverqueriescontainersidprocessinstancesget) | **GET** /server/queries/containers/{id}/process/instances | 
 
@@ -106,8 +104,14 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.KieContainer](docs/KieContainer.md)
+ - [Model.KieContainerMessages](docs/KieContainerMessages.md)
+ - [Model.KieContainerReleaseid](docs/KieContainerReleaseid.md)
+ - [Model.KieContainersStatus](docs/KieContainersStatus.md)
+ - [Model.KieContainersStatusResult](docs/KieContainersStatusResult.md)
+ - [Model.KieContainersStatusResultKiecontainers](docs/KieContainersStatusResultKiecontainers.md)
  - [Model.ProcessInstance](docs/ProcessInstance.md)
- - [Model.ProcessInstanceList](docs/ProcessInstanceList.md)
+ - [Model.ProcessInstances](docs/ProcessInstances.md)
 
 
 <a name="documentation-for-authorization"></a>
