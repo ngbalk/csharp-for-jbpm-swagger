@@ -1,0 +1,259 @@
+
+swagger: '2.0'
+info:
+  version: 0.1-SNAPSHOT
+  title: project
+host: localhost:8081
+basePath: /kie-server/services/rest
+schemes:
+  - http
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
+paths:
+  /server/containers/{id}/processes/{pId}/instances:
+    post:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: id
+          in: path
+          required: true
+        - type: string
+          name: pId
+          in: path
+          required: true
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+
+  /server/queries/containers/{id}/process/instances:
+    get:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: id
+          in: path
+          required: true
+        - type: integer
+          name: status
+          in: query
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: "#/definitions/ProcessInstances"
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+
+  /server/containers:
+    get:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: "#/definitions/KieContainersStatus"
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+
+  /server/containers/{containerId}/processes/instances/{pInstanceId}/variables:
+    get:
+      security:
+        - basicAuth : []
+      consumes: []
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: containerId
+          in: path
+          required: true
+        - type: integer
+          name: pInstanceId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: object
+
+definitions:
+  KieContainersStatus:
+    type: object
+    properties:
+      type:
+        type: string
+      msg: 
+        type: string
+      result:
+        type: object
+        properties:
+          kie-containers:
+            type: object
+            properties:
+              kie-container:
+                type: array
+                items:
+                  $ref: "#/definitions/KieContainer"
+                
+  KieContainer:
+    type: object
+    properties:
+      status:
+        type: string
+      messages:
+        type: array
+        items:
+          type: object
+          properties:
+            severity:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+            content:
+              type: array
+              items:
+                type:
+                  string
+      container-id: 
+        type: string
+      release-id:
+        type: object
+        properties:
+          version:
+            type: string
+          group-id:
+            type: string
+          artifact-id:
+            type: string
+      resolved-release-id:
+        type: object
+        properties:
+          version:
+            type: string
+          group-id:
+            type: string
+          artifact-id:
+            type: string
+      
+  ProcessInstances:
+    type: object
+    properties:
+      process-instance:
+        type: array
+        items:
+          $ref: "#/definitions/ProcessInstance"
+          
+  ProcessInstance:
+    type: object
+    properties:
+      initiator:
+        type: string
+      process-instance-id:
+        type: integer
+      process-id:
+        type: string
+      process-name:
+        type: string
+      process-version:
+        type: string
+      process-instance-state:
+        type: integer
+      container-id:
+        type: string
+      start-date:
+        type: string
+        format: date-time
+      process-instance-desc:
+        type: string
+      correlation-key:
+        type: string
+      parent-instance-id:
+        type: integer
