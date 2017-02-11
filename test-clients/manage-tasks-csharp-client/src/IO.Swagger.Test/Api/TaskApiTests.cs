@@ -42,9 +42,9 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi();
-            instance.Configuration.Username = "kieserver";
-            instance.Configuration.Password = "kieserver1!";
+            instance = new DefaultApi("http://localhost:8081/kie-server/services/rest");
+            instance.Configuration.Username = "userA";
+            instance.Configuration.Password = "bpmsuite1!";
             instance.Configuration.ApiClient.AddToTypeRegistry("svm.hello_bpm.Person", typeof(Person));
             ServerQueriesTasksInstancesPotOwnersGetTest();
         }
@@ -70,10 +70,10 @@ namespace IO.Swagger.Test
             ServerContainersContainerIdTasksTInstanceIdStatesClaimedPutTest();
             ServerContainersContainerIdTasksTInstanceIdStatesStartedPutTest();
             ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutAtomicParamTest();
-            ServerQueriesTasksInstancesPotOwnersGetTest();
-            ServerContainersContainerIdTasksTInstanceIdStatesClaimedPutTest();
-            ServerContainersContainerIdTasksTInstanceIdStatesStartedPutTest();
-            ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutNoneParamTest();
+//            ServerQueriesTasksInstancesPotOwnersGetTest();
+//            ServerContainersContainerIdTasksTInstanceIdStatesClaimedPutTest();
+//            ServerContainersContainerIdTasksTInstanceIdStatesStartedPutTest();
+//            ServerContainersContainerIdTasksTInstanceIdStatesCompletedPutNoneParamTest();
         }
 
         /// <summary>

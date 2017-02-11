@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using RestSharp;
@@ -20,6 +21,7 @@ using NUnit.Framework;
 using IO.Swagger.Client;
 using IO.Swagger.Api;
 using IO.Swagger.Model;
+using Newtonsoft.Json;
 
 namespace IO.Swagger.Test
 {
@@ -41,7 +43,9 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi();
+            instance = new DefaultApi("http://localhost:8081/kie-server/services/rest");
+            instance.Configuration.Username = "userA";
+            instance.Configuration.Password = "bpmsuite1!";
         }
 
         /// <summary>
@@ -121,7 +125,50 @@ namespace IO.Swagger.Test
             //var response = instance.ServerQueriesTasksInstancesPotOwnersGet(groups, page, pageSize, sort, sortOrder, status, user);
             //Assert.IsInstanceOf<TaskSummary> (response, "response is TaskSummary");
         }
-        
+
+        [Test]
+        public void TestGettingQueryResultsAsStrongTypedTaskSummary()
+        {
+            string queryName = "getTasks";
+            string mapper = "UserTasksWithVariables";
+            Object body = null;
+            int pageSize = 20;
+            dynamic response =  instance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, pageSize, body);
+            var serialized = JsonConvert.SerializeObject(response);
+            TaskInstancesWithVars taskInstances = JsonConvert.DeserializeObject(serialized, typeof(TaskInstancesWithVars));
+            Assert.IsInstanceOf<TaskInstancesWithVars> (taskInstances, "response is TaskInstancesWithVars");
+            Console.WriteLine(taskInstances.TaskInstance[0].TaskInputData);
+        }
+
+        /// <summary>
+        /// Test ServerQueriesDefinitionsQueryNamePost
+        /// </summary>
+        [Test]
+        public void ServerQueriesDefinitionsQueryNamePostTest()
+        {
+            string queryName = "getTasks";
+            Query q = new Query();
+            q.QueryName = "getTasks";
+            q.QuerySource = "java:jboss/datasources/ExampleDS";
+            q.QueryExpression =
+                "SELECT ti.*, tv.NAME as TVNAME, tv.VALUE as TVVALUE, oe.id AS OEID  FROM AUDITTASKIMPL ti, PEOPLEASSIGNMENTS_POTOWNERS  po, ORGANIZATIONALENTITY  oe, TASKVARIABLEIMPL tv where ti.TASKID = po.TASK_ID  and po.ENTITY_ID  = oe.ID and ti.TASKID = tv.TASKID";
+            q.QueryTarget = "PO_TASK";
+            instance.ServerQueriesDefinitionsQueryNamePost(queryName, q);
+
+        }
+
+
+        /// <summary>
+        /// Test ServerQueriesDefinitionsQueryNamePost
+        /// </summary>
+        [Test]
+        public void ServerQueriesDefinitionsQueryNameDeleteTest()
+        {
+            string queryName = "getTasks";
+            instance.ServerQueriesDefinitionsQueryNameDelete(queryName);
+
+        }
+
     }
 
 }

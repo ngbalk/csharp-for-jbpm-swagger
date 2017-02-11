@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: 0.1-SNAPSHOT
   title: project
-host: localhost:8081
+host: 10.52.36.21:8080
 basePath: /kie-server/services/rest
 schemes:
   - http
@@ -162,8 +162,172 @@ paths:
               type: string
           schema:
             type: string
+
+  '/server/queries/definitions/{queryName}':
+    post:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: queryName
+          in: path
+          required: true
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/Query"
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+    delete:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: queryName
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
+  '/server/queries/definitions/{queryName}/filtered-data':
+    post:
+      security:
+       - basicAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: queryName
+          in: path
+          required: true
+        - type: string
+          name: mapper
+          in: query
+          required: true
+          enum: 
+            - UserTasksWithCustomVariables
+            - UserTasksWithVariables
+            - UserTasks
+            - ProcessInstancesWithCustomVariables
+            - ProcessInstancesWithVariables
+            - ProcessInstances
+            - TaskSummaries
+            - RawList
+        - type: integer
+          name: pageSize
+          in: query
+          required: false
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: object
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
             
 definitions:
+  Query:
+    type: object
+    properties:
+      query-name:
+        type: string
+      query-source:
+        type: string
+      query-expression:
+        type: string
+      query-target:
+        type: string
   TaskSummary:
     type: object
     properties: 
@@ -171,6 +335,8 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Task"
+          
+          
   Task:
     type: object
     properties:
@@ -189,11 +355,11 @@ definitions:
       task-is-skipable:
         type: boolean
       task-created-on:
-        type: integer
-        format: int64
+        type: string
+        format: date-time
       task-activation-time:
-        type: integer
-        format: int64
+        type: string
+        format: date-time
       task-proc-inst-id:
         type: integer
       task-proc-def-id:
@@ -202,3 +368,45 @@ definitions:
         type: string
       task-parent-id:
         type: integer
+  
+  TaskInstancesWithVars:
+    type: object
+    properties: 
+      task-instance: 
+        type: array
+        items:
+          $ref: "#/definitions/TaskWithVars"
+        
+  TaskWithVars:
+    type: object
+    properties:
+      task-id:
+        type: integer
+      task-priority:
+        type: integer
+      task-name:
+        type: string
+      task-description:
+        type: string
+      task-status:
+        type: string
+      task-actual-owner:
+        type: string
+      task-created-by:
+        type: string
+      task-created-on:
+        type: string
+        format: date-time
+      task-activation-time:
+        type: string
+        format: date-time
+      task-process-instance-id:
+        type: integer
+      task-process-id:
+        type: string
+      task-container-id:
+        type: string
+      task-input-data:      
+        type: object
+        additionalProperties:
+          type: string

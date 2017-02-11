@@ -54,17 +54,17 @@ namespace IO.Swagger.Client
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default configuration and base path (http://localhost:8081/kie-server/services/rest).
+        /// with default configuration and base path (http://10.52.36.21:8080/kie-server/services/rest).
         /// </summary>
         public ApiClient()
         {
             Configuration = Configuration.Default;
-            RestClient = new RestClient("http://localhost:8081/kie-server/services/rest");
+            RestClient = new RestClient("http://10.52.36.21:8080/kie-server/services/rest");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (http://localhost:8081/kie-server/services/rest).
+        /// with default base path (http://10.52.36.21:8080/kie-server/services/rest).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config = null)
@@ -74,7 +74,7 @@ namespace IO.Swagger.Client
             else
                 Configuration = config;
 
-            RestClient = new RestClient("http://localhost:8081/kie-server/services/rest");
+            RestClient = new RestClient("http://10.52.36.21:8080/kie-server/services/rest");
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace IO.Swagger.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "http://localhost:8081/kie-server/services/rest")
+        public ApiClient(String basePath = "http://10.52.36.21:8080/kie-server/services/rest")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");

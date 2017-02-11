@@ -94,21 +94,27 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8081/kie-server/services/rest*
+All URIs are relative to *http://10.52.36.21:8080/kie-server/services/rest*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**ServerContainersContainerIdTasksTInstanceIdStatesClaimedPut**](docs/DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatesclaimedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/claimed | 
 *DefaultApi* | [**ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut**](docs/DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatescompletedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/completed | 
 *DefaultApi* | [**ServerContainersContainerIdTasksTInstanceIdStatesStartedPut**](docs/DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatesstartedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/started | 
+*DefaultApi* | [**ServerQueriesDefinitionsQueryNameDelete**](docs/DefaultApi.md#serverqueriesdefinitionsquerynamedelete) | **DELETE** /server/queries/definitions/{queryName} | 
+*DefaultApi* | [**ServerQueriesDefinitionsQueryNameFilteredDataPost**](docs/DefaultApi.md#serverqueriesdefinitionsquerynamefiltereddatapost) | **POST** /server/queries/definitions/{queryName}/filtered-data | 
+*DefaultApi* | [**ServerQueriesDefinitionsQueryNamePost**](docs/DefaultApi.md#serverqueriesdefinitionsquerynamepost) | **POST** /server/queries/definitions/{queryName} | 
 *DefaultApi* | [**ServerQueriesTasksInstancesPotOwnersGet**](docs/DefaultApi.md#serverqueriestasksinstancespotownersget) | **GET** /server/queries/tasks/instances/pot-owners | 
 
 
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.Query](docs/Query.md)
  - [Model.Task](docs/Task.md)
+ - [Model.TaskInstancesWithVars](docs/TaskInstancesWithVars.md)
  - [Model.TaskSummary](docs/TaskSummary.md)
+ - [Model.TaskWithVars](docs/TaskWithVars.md)
 
 
 <a name="documentation-for-authorization"></a>

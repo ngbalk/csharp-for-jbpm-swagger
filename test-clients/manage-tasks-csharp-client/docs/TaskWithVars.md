@@ -1,21 +1,21 @@
-# IO.Swagger.Model.Task
+# IO.Swagger.Model.TaskWithVars
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TaskId** | **int?** |  | [optional] 
+**TaskPriority** | **int?** |  | [optional] 
 **TaskName** | **string** |  | [optional] 
-**TaskSubject** | **string** |  | [optional] 
 **TaskDescription** | **string** |  | [optional] 
 **TaskStatus** | **string** |  | [optional] 
-**TaskPriority** | **int?** |  | [optional] 
-**TaskIsSkipable** | **bool?** |  | [optional] 
+**TaskActualOwner** | **string** |  | [optional] 
+**TaskCreatedBy** | **string** |  | [optional] 
 **TaskCreatedOn** | **DateTime?** |  | [optional] 
 **TaskActivationTime** | **DateTime?** |  | [optional] 
-**TaskProcInstId** | **int?** |  | [optional] 
-**TaskProcDefId** | **string** |  | [optional] 
+**TaskProcessInstanceId** | **int?** |  | [optional] 
+**TaskProcessId** | **string** |  | [optional] 
 **TaskContainerId** | **string** |  | [optional] 
-**TaskParentId** | **int?** |  | [optional] 
+**TaskInputData** | **Dictionary&lt;string, string&gt;** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

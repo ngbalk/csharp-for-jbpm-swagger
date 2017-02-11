@@ -24,42 +24,42 @@ using System.ComponentModel.DataAnnotations;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// Task
+    /// TaskWithVars
     /// </summary>
     [DataContract]
-    public partial class Task :  IEquatable<Task>, IValidatableObject
+    public partial class TaskWithVars :  IEquatable<TaskWithVars>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Task" /> class.
+        /// Initializes a new instance of the <see cref="TaskWithVars" /> class.
         /// </summary>
         /// <param name="TaskId">TaskId.</param>
+        /// <param name="TaskPriority">TaskPriority.</param>
         /// <param name="TaskName">TaskName.</param>
-        /// <param name="TaskSubject">TaskSubject.</param>
         /// <param name="TaskDescription">TaskDescription.</param>
         /// <param name="TaskStatus">TaskStatus.</param>
-        /// <param name="TaskPriority">TaskPriority.</param>
-        /// <param name="TaskIsSkipable">TaskIsSkipable.</param>
+        /// <param name="TaskActualOwner">TaskActualOwner.</param>
+        /// <param name="TaskCreatedBy">TaskCreatedBy.</param>
         /// <param name="TaskCreatedOn">TaskCreatedOn.</param>
         /// <param name="TaskActivationTime">TaskActivationTime.</param>
-        /// <param name="TaskProcInstId">TaskProcInstId.</param>
-        /// <param name="TaskProcDefId">TaskProcDefId.</param>
+        /// <param name="TaskProcessInstanceId">TaskProcessInstanceId.</param>
+        /// <param name="TaskProcessId">TaskProcessId.</param>
         /// <param name="TaskContainerId">TaskContainerId.</param>
-        /// <param name="TaskParentId">TaskParentId.</param>
-        public Task(int? TaskId = default(int?), string TaskName = default(string), string TaskSubject = default(string), string TaskDescription = default(string), string TaskStatus = default(string), int? TaskPriority = default(int?), bool? TaskIsSkipable = default(bool?), DateTime? TaskCreatedOn = default(DateTime?), DateTime? TaskActivationTime = default(DateTime?), int? TaskProcInstId = default(int?), string TaskProcDefId = default(string), string TaskContainerId = default(string), int? TaskParentId = default(int?))
+        /// <param name="TaskInputData">TaskInputData.</param>
+        public TaskWithVars(int? TaskId = default(int?), int? TaskPriority = default(int?), string TaskName = default(string), string TaskDescription = default(string), string TaskStatus = default(string), string TaskActualOwner = default(string), string TaskCreatedBy = default(string), DateTime? TaskCreatedOn = default(DateTime?), DateTime? TaskActivationTime = default(DateTime?), int? TaskProcessInstanceId = default(int?), string TaskProcessId = default(string), string TaskContainerId = default(string), Dictionary<string, string> TaskInputData = default(Dictionary<string, string>))
         {
             this.TaskId = TaskId;
+            this.TaskPriority = TaskPriority;
             this.TaskName = TaskName;
-            this.TaskSubject = TaskSubject;
             this.TaskDescription = TaskDescription;
             this.TaskStatus = TaskStatus;
-            this.TaskPriority = TaskPriority;
-            this.TaskIsSkipable = TaskIsSkipable;
+            this.TaskActualOwner = TaskActualOwner;
+            this.TaskCreatedBy = TaskCreatedBy;
             this.TaskCreatedOn = TaskCreatedOn;
             this.TaskActivationTime = TaskActivationTime;
-            this.TaskProcInstId = TaskProcInstId;
-            this.TaskProcDefId = TaskProcDefId;
+            this.TaskProcessInstanceId = TaskProcessInstanceId;
+            this.TaskProcessId = TaskProcessId;
             this.TaskContainerId = TaskContainerId;
-            this.TaskParentId = TaskParentId;
+            this.TaskInputData = TaskInputData;
         }
         
         /// <summary>
@@ -68,15 +68,15 @@ namespace IO.Swagger.Model
         [DataMember(Name="task-id", EmitDefaultValue=false)]
         public int? TaskId { get; set; }
         /// <summary>
+        /// Gets or Sets TaskPriority
+        /// </summary>
+        [DataMember(Name="task-priority", EmitDefaultValue=false)]
+        public int? TaskPriority { get; set; }
+        /// <summary>
         /// Gets or Sets TaskName
         /// </summary>
         [DataMember(Name="task-name", EmitDefaultValue=false)]
         public string TaskName { get; set; }
-        /// <summary>
-        /// Gets or Sets TaskSubject
-        /// </summary>
-        [DataMember(Name="task-subject", EmitDefaultValue=false)]
-        public string TaskSubject { get; set; }
         /// <summary>
         /// Gets or Sets TaskDescription
         /// </summary>
@@ -88,15 +88,15 @@ namespace IO.Swagger.Model
         [DataMember(Name="task-status", EmitDefaultValue=false)]
         public string TaskStatus { get; set; }
         /// <summary>
-        /// Gets or Sets TaskPriority
+        /// Gets or Sets TaskActualOwner
         /// </summary>
-        [DataMember(Name="task-priority", EmitDefaultValue=false)]
-        public int? TaskPriority { get; set; }
+        [DataMember(Name="task-actual-owner", EmitDefaultValue=false)]
+        public string TaskActualOwner { get; set; }
         /// <summary>
-        /// Gets or Sets TaskIsSkipable
+        /// Gets or Sets TaskCreatedBy
         /// </summary>
-        [DataMember(Name="task-is-skipable", EmitDefaultValue=false)]
-        public bool? TaskIsSkipable { get; set; }
+        [DataMember(Name="task-created-by", EmitDefaultValue=false)]
+        public string TaskCreatedBy { get; set; }
         /// <summary>
         /// Gets or Sets TaskCreatedOn
         /// </summary>
@@ -110,25 +110,25 @@ namespace IO.Swagger.Model
         [DataMember(Name="task-activation-time", EmitDefaultValue=false)]
         public DateTime? TaskActivationTime { get; set; }
         /// <summary>
-        /// Gets or Sets TaskProcInstId
+        /// Gets or Sets TaskProcessInstanceId
         /// </summary>
-        [DataMember(Name="task-proc-inst-id", EmitDefaultValue=false)]
-        public int? TaskProcInstId { get; set; }
+        [DataMember(Name="task-process-instance-id", EmitDefaultValue=false)]
+        public int? TaskProcessInstanceId { get; set; }
         /// <summary>
-        /// Gets or Sets TaskProcDefId
+        /// Gets or Sets TaskProcessId
         /// </summary>
-        [DataMember(Name="task-proc-def-id", EmitDefaultValue=false)]
-        public string TaskProcDefId { get; set; }
+        [DataMember(Name="task-process-id", EmitDefaultValue=false)]
+        public string TaskProcessId { get; set; }
         /// <summary>
         /// Gets or Sets TaskContainerId
         /// </summary>
         [DataMember(Name="task-container-id", EmitDefaultValue=false)]
         public string TaskContainerId { get; set; }
         /// <summary>
-        /// Gets or Sets TaskParentId
+        /// Gets or Sets TaskInputData
         /// </summary>
-        [DataMember(Name="task-parent-id", EmitDefaultValue=false)]
-        public int? TaskParentId { get; set; }
+        [DataMember(Name="task-input-data", EmitDefaultValue=false)]
+        public Dictionary<string, string> TaskInputData { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -136,20 +136,20 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Task {\n");
+            sb.Append("class TaskWithVars {\n");
             sb.Append("  TaskId: ").Append(TaskId).Append("\n");
+            sb.Append("  TaskPriority: ").Append(TaskPriority).Append("\n");
             sb.Append("  TaskName: ").Append(TaskName).Append("\n");
-            sb.Append("  TaskSubject: ").Append(TaskSubject).Append("\n");
             sb.Append("  TaskDescription: ").Append(TaskDescription).Append("\n");
             sb.Append("  TaskStatus: ").Append(TaskStatus).Append("\n");
-            sb.Append("  TaskPriority: ").Append(TaskPriority).Append("\n");
-            sb.Append("  TaskIsSkipable: ").Append(TaskIsSkipable).Append("\n");
+            sb.Append("  TaskActualOwner: ").Append(TaskActualOwner).Append("\n");
+            sb.Append("  TaskCreatedBy: ").Append(TaskCreatedBy).Append("\n");
             sb.Append("  TaskCreatedOn: ").Append(TaskCreatedOn).Append("\n");
             sb.Append("  TaskActivationTime: ").Append(TaskActivationTime).Append("\n");
-            sb.Append("  TaskProcInstId: ").Append(TaskProcInstId).Append("\n");
-            sb.Append("  TaskProcDefId: ").Append(TaskProcDefId).Append("\n");
+            sb.Append("  TaskProcessInstanceId: ").Append(TaskProcessInstanceId).Append("\n");
+            sb.Append("  TaskProcessId: ").Append(TaskProcessId).Append("\n");
             sb.Append("  TaskContainerId: ").Append(TaskContainerId).Append("\n");
-            sb.Append("  TaskParentId: ").Append(TaskParentId).Append("\n");
+            sb.Append("  TaskInputData: ").Append(TaskInputData).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -171,15 +171,15 @@ namespace IO.Swagger.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Task);
+            return this.Equals(obj as TaskWithVars);
         }
 
         /// <summary>
-        /// Returns true if Task instances are equal
+        /// Returns true if TaskWithVars instances are equal
         /// </summary>
-        /// <param name="other">Instance of Task to be compared</param>
+        /// <param name="other">Instance of TaskWithVars to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Task other)
+        public bool Equals(TaskWithVars other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -192,14 +192,14 @@ namespace IO.Swagger.Model
                     this.TaskId.Equals(other.TaskId)
                 ) && 
                 (
+                    this.TaskPriority == other.TaskPriority ||
+                    this.TaskPriority != null &&
+                    this.TaskPriority.Equals(other.TaskPriority)
+                ) && 
+                (
                     this.TaskName == other.TaskName ||
                     this.TaskName != null &&
                     this.TaskName.Equals(other.TaskName)
-                ) && 
-                (
-                    this.TaskSubject == other.TaskSubject ||
-                    this.TaskSubject != null &&
-                    this.TaskSubject.Equals(other.TaskSubject)
                 ) && 
                 (
                     this.TaskDescription == other.TaskDescription ||
@@ -212,14 +212,14 @@ namespace IO.Swagger.Model
                     this.TaskStatus.Equals(other.TaskStatus)
                 ) && 
                 (
-                    this.TaskPriority == other.TaskPriority ||
-                    this.TaskPriority != null &&
-                    this.TaskPriority.Equals(other.TaskPriority)
+                    this.TaskActualOwner == other.TaskActualOwner ||
+                    this.TaskActualOwner != null &&
+                    this.TaskActualOwner.Equals(other.TaskActualOwner)
                 ) && 
                 (
-                    this.TaskIsSkipable == other.TaskIsSkipable ||
-                    this.TaskIsSkipable != null &&
-                    this.TaskIsSkipable.Equals(other.TaskIsSkipable)
+                    this.TaskCreatedBy == other.TaskCreatedBy ||
+                    this.TaskCreatedBy != null &&
+                    this.TaskCreatedBy.Equals(other.TaskCreatedBy)
                 ) && 
                 (
                     this.TaskCreatedOn == other.TaskCreatedOn ||
@@ -232,14 +232,14 @@ namespace IO.Swagger.Model
                     this.TaskActivationTime.Equals(other.TaskActivationTime)
                 ) && 
                 (
-                    this.TaskProcInstId == other.TaskProcInstId ||
-                    this.TaskProcInstId != null &&
-                    this.TaskProcInstId.Equals(other.TaskProcInstId)
+                    this.TaskProcessInstanceId == other.TaskProcessInstanceId ||
+                    this.TaskProcessInstanceId != null &&
+                    this.TaskProcessInstanceId.Equals(other.TaskProcessInstanceId)
                 ) && 
                 (
-                    this.TaskProcDefId == other.TaskProcDefId ||
-                    this.TaskProcDefId != null &&
-                    this.TaskProcDefId.Equals(other.TaskProcDefId)
+                    this.TaskProcessId == other.TaskProcessId ||
+                    this.TaskProcessId != null &&
+                    this.TaskProcessId.Equals(other.TaskProcessId)
                 ) && 
                 (
                     this.TaskContainerId == other.TaskContainerId ||
@@ -247,9 +247,9 @@ namespace IO.Swagger.Model
                     this.TaskContainerId.Equals(other.TaskContainerId)
                 ) && 
                 (
-                    this.TaskParentId == other.TaskParentId ||
-                    this.TaskParentId != null &&
-                    this.TaskParentId.Equals(other.TaskParentId)
+                    this.TaskInputData == other.TaskInputData ||
+                    this.TaskInputData != null &&
+                    this.TaskInputData.SequenceEqual(other.TaskInputData)
                 );
         }
 
@@ -266,30 +266,30 @@ namespace IO.Swagger.Model
                 // Suitable nullity checks etc, of course :)
                 if (this.TaskId != null)
                     hash = hash * 59 + this.TaskId.GetHashCode();
+                if (this.TaskPriority != null)
+                    hash = hash * 59 + this.TaskPriority.GetHashCode();
                 if (this.TaskName != null)
                     hash = hash * 59 + this.TaskName.GetHashCode();
-                if (this.TaskSubject != null)
-                    hash = hash * 59 + this.TaskSubject.GetHashCode();
                 if (this.TaskDescription != null)
                     hash = hash * 59 + this.TaskDescription.GetHashCode();
                 if (this.TaskStatus != null)
                     hash = hash * 59 + this.TaskStatus.GetHashCode();
-                if (this.TaskPriority != null)
-                    hash = hash * 59 + this.TaskPriority.GetHashCode();
-                if (this.TaskIsSkipable != null)
-                    hash = hash * 59 + this.TaskIsSkipable.GetHashCode();
+                if (this.TaskActualOwner != null)
+                    hash = hash * 59 + this.TaskActualOwner.GetHashCode();
+                if (this.TaskCreatedBy != null)
+                    hash = hash * 59 + this.TaskCreatedBy.GetHashCode();
                 if (this.TaskCreatedOn != null)
                     hash = hash * 59 + this.TaskCreatedOn.GetHashCode();
                 if (this.TaskActivationTime != null)
                     hash = hash * 59 + this.TaskActivationTime.GetHashCode();
-                if (this.TaskProcInstId != null)
-                    hash = hash * 59 + this.TaskProcInstId.GetHashCode();
-                if (this.TaskProcDefId != null)
-                    hash = hash * 59 + this.TaskProcDefId.GetHashCode();
+                if (this.TaskProcessInstanceId != null)
+                    hash = hash * 59 + this.TaskProcessInstanceId.GetHashCode();
+                if (this.TaskProcessId != null)
+                    hash = hash * 59 + this.TaskProcessId.GetHashCode();
                 if (this.TaskContainerId != null)
                     hash = hash * 59 + this.TaskContainerId.GetHashCode();
-                if (this.TaskParentId != null)
-                    hash = hash * 59 + this.TaskParentId.GetHashCode();
+                if (this.TaskInputData != null)
+                    hash = hash * 59 + this.TaskInputData.GetHashCode();
                 return hash;
             }
         }
