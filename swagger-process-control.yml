@@ -1,21 +1,76 @@
 
 swagger: '2.0'
 info:
-  version: 0.1-SNAPSHOT
-  title: project
-host: localhost:8081
+  version: 1.0-SNAPSHOT
+  title: KieServerProcessManager
+host: 10.52.36.21:8080
 basePath: /kie-server/services/rest
 schemes:
   - http
 securityDefinitions:
-  basicAuth:
-    type: basic
-    description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
+  tokenAuth:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
+
+  /server/queries/processes/definitions:
+    get:
+      security:
+        - tokenAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: filter
+          in: query
+          required: false
+        - type: integer
+          name: page
+          in: query
+          required: false
+        - type: integer
+          name: pageSize
+          in: query
+          required: false
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: '#/definitions/ProcessDefinitions'
+              
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+
   /server/containers/{id}/processes/{pId}/instances:
     post:
       security:
-       - basicAuth: []
+        - tokenAuth: []
       consumes:
         - application/json
         - application/xml
@@ -70,7 +125,7 @@ paths:
   /server/queries/containers/{id}/process/instances:
     get:
       security:
-       - basicAuth: []
+        - tokenAuth: []
       consumes:
         - application/json
         - application/xml
@@ -104,11 +159,83 @@ paths:
               type: string
           schema:
             type: string
-
+            
+  /server/queries/processes/instances/{pInstanceId}:
+    get:
+      security:
+        - tokenAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: integer
+          name: pInstanceId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: "#/definitions/ProcessInstance"
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
+  /server/containers/{id}/processes/instances/{pInstanceId}:
+    delete:
+      security:
+        - tokenAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: id
+          in: path
+          required: true
+        - type: integer
+          name: pInstanceId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
   /server/containers:
     get:
       security:
-       - basicAuth: []
+        - tokenAuth: []
       consumes:
         - application/json
         - application/xml
@@ -138,7 +265,7 @@ paths:
   /server/containers/{containerId}/processes/instances/{pInstanceId}/variables:
     get:
       security:
-        - basicAuth : []
+        - tokenAuth: []
       consumes: []
       produces:
         - application/json
@@ -257,3 +384,25 @@ definitions:
         type: string
       parent-instance-id:
         type: integer
+      
+  ProcessDefinitions:
+    type: object
+    properties:
+      processes:
+        type: array
+        items:
+          $ref: "#/definitions/ProcessDefinition"
+          
+  ProcessDefinition:
+    type: object
+    properties:
+      process-id:
+        type: string
+      process-name:
+        type: string
+      process-version:
+        type: string
+      package:
+        type: string
+      container-id:
+        type: string

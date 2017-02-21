@@ -1,20 +1,21 @@
 swagger: '2.0'
 info:
-  version: 0.1-SNAPSHOT
-  title: project
+  version: 1.0-SNAPSHOT
+  title: KieServerTaskManager
 host: 10.52.36.21:8080
 basePath: /kie-server/services/rest
 schemes:
   - http
 securityDefinitions:
-  basicAuth:
-    type: basic
-    description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
+  tokenAuth:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /server/containers/{containerId}/tasks/{tInstanceId}/states/claimed:
     put:
       security:
-        - basicAuth : []
+        - tokenAuth: []
       consumes: []
       produces:
         - application/json
@@ -42,7 +43,7 @@ paths:
   /server/containers/{containerId}/tasks/{tInstanceId}/states/started:
     put:
       security:
-        - basicAuth : []
+        - tokenAuth: []
       consumes: []
       produces:
         - application/json
@@ -70,7 +71,7 @@ paths:
   /server/containers/{containerId}/tasks/{tInstanceId}/states/completed:
     put:
       security:
-        - basicAuth : []
+        - tokenAuth: []
       consumes: []
       produces:
         - application/json
@@ -101,11 +102,131 @@ paths:
               type: string
           schema:
             type: string
-
+            
+            
+  /server/containers/{containerId}/tasks/{tInstanceId}/states/failed:
+    put:
+      security:
+        - tokenAuth: []
+      consumes: []
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: containerId
+          in: path
+          required: true
+        - type: integer
+          name: tInstanceId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
+  /server/containers/{containerId}/tasks/{tInstanceId}:
+    get:
+      security:
+        - tokenAuth: []
+      consumes: []
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: containerId
+          in: path
+          required: true
+        - type: integer
+          name: tInstanceId
+          in: path
+          required: true
+        - type: boolean
+          name: withInputData
+          in: query
+          required: false
+        - type: boolean
+          name: withOutputData
+          in: query
+          required: false
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: "#/definitions/TaskInstance"
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
+  /server/queries/tasks/instances/process/{pInstanceId}:
+    get:
+      security:
+        - tokenAuth: []
+      consumes: []
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: integer
+          name: pInstanceId
+          in: path
+          required: true
+        - type: integer
+          name: page
+          in: query
+          required: false
+        - type: integer
+          name: pageSize
+          in: query
+          required: false
+        - type: string
+          name: status
+          in: query
+          required: false
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: "#/definitions/TaskSummaries"
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+            
+            
   /server/queries/tasks/instances/pot-owners:
     get:
       security:
-        - basicAuth: []
+        - tokenAuth: []
       consumes: []
       produces:
         - application/json
@@ -152,7 +273,7 @@ paths:
             Content-Language:
               type: string
           schema:
-            $ref: "#/definitions/TaskSummary"
+            $ref: "#/definitions/TaskSummaries"
         '500':
           description: Internal Server Error
           headers:
@@ -163,10 +284,10 @@ paths:
           schema:
             type: string
 
-  '/server/queries/definitions/{queryName}':
+  /server/queries/definitions/{queryName}:
     post:
       security:
-       - basicAuth: []
+        - tokenAuth: []
       consumes:
         - application/json
         - application/xml
@@ -211,7 +332,7 @@ paths:
             type: string
     delete:
       security:
-       - basicAuth: []
+        - tokenAuth: []
       consumes:
         - application/json
         - application/xml
@@ -250,10 +371,10 @@ paths:
           schema:
             type: string
             
-  '/server/queries/definitions/{queryName}/filtered-data':
+  /server/queries/definitions/{queryName}/filtered-data:
     post:
       security:
-       - basicAuth: []
+        - tokenAuth: []
       consumes:
         - application/json
         - application/xml
@@ -282,11 +403,15 @@ paths:
           name: pageSize
           in: query
           required: false
-        - name: body
+        - type: integer
+          name: page
+          in: query
+          required: false
+        - name: filter
           in: body
           required: false
           schema:
-            type: object
+            $ref: '#/definitions/Filter'
       responses:
         '200':
           description: OK
@@ -315,8 +440,33 @@ paths:
               type: string
           schema:
             type: string
-            
+
 definitions:
+  TaskStatus:
+    type: string
+    enum:
+      - Created
+      - Ready
+      - Reserved
+      - InProgress
+      - Completed
+      - Failed
+      - Error
+      - Exited
+      - Obsolete
+      
+  Mapper:
+    type: string
+    enum: 
+      - UserTasksWithCustomVariables
+      - UserTasksWithVariables
+      - UserTasks
+      - ProcessInstancesWithCustomVariables
+      - ProcessInstancesWithVariables
+      - ProcessInstances
+      - TaskSummaries
+      - RawList
+
   Query:
     type: object
     properties:
@@ -328,16 +478,50 @@ definitions:
         type: string
       query-target:
         type: string
-  TaskSummary:
+        
+  Filter:
+    type: object
+    properties:
+      order-by:
+        type: string
+      order-asc:
+        type: boolean
+      query-params:
+        type: array
+        items:
+          type: object
+          properties:
+            cond-column:
+              type: string
+            cond-operator:
+              type: string
+              enum: 
+                - IS_NULL
+                - NOT_NULL
+                - EQUALS_TO
+                - NOT_EQUALS_TO
+                - LIKE_TO
+                - GREATER_THAN
+                - GREATER_OR_EQUALS_TO
+                - LOWER_THAN
+                - LOWER_OR_EQUALS_TO
+                - BETWEEN
+                - IN
+                - NOT_IN
+            cond-values:
+              type: array
+              items:
+                type: string
+              
+  TaskSummaries:
     type: object
     properties: 
       task-summary: 
         type: array
         items:
-          $ref: "#/definitions/Task"
+          $ref: "#/definitions/TaskSummary"
           
-          
-  Task:
+  TaskSummary:
     type: object
     properties:
       task-id:
@@ -369,15 +553,15 @@ definitions:
       task-parent-id:
         type: integer
   
-  TaskInstancesWithVars:
+  TaskInstances:
     type: object
     properties: 
       task-instance: 
         type: array
         items:
-          $ref: "#/definitions/TaskWithVars"
+          $ref: "#/definitions/TaskInstance"
         
-  TaskWithVars:
+  TaskInstance:
     type: object
     properties:
       task-id:
@@ -386,7 +570,11 @@ definitions:
         type: integer
       task-name:
         type: string
+      task-subject:
+        type: string
       task-description:
+        type: string
+      task-form:
         type: string
       task-status:
         type: string
@@ -400,7 +588,13 @@ definitions:
       task-activation-time:
         type: string
         format: date-time
+      task-skippable:
+        type: boolean
+      task-workitem-id:
+        type: integer
       task-process-instance-id:
+        type: integer
+      task-parent-id:
         type: integer
       task-process-id:
         type: string

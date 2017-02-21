@@ -42,9 +42,8 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi("http://localhost:8081/kie-server/services/rest");
-            instance.Configuration.Username = "userA";
-            instance.Configuration.Password = "bpmsuite1!";
+            instance = new DefaultApi("http://10.52.36.22:8080/kie-server/services/rest");
+            instance.Configuration.ApiKey.Add("Authorization","eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkF1ZHBIa0tnS2lhZ3Q2U0pxajdVcjFRX3M5USJ9.eyJhdWQiOiJodHRwczovL3d3dy5zZXJ2c21hcnQuc2VydmljZW1hc3Rlci5jb20iLCJpc3MiOiJodHRwOi8vYWRmcy5zZXJ2aWNlbWFzdGVyLmNvbS9hZGZzL3NlcnZpY2VzL3RydXN0IiwiaWF0IjoxNDg3MTg2Mjc4LCJleHAiOjE0ODcyNDAyNzgsIndpbmFjY291bnRuYW1lIjoianJvbGZlIiwiZ3JvdXAiOlsiRG9tYWluIFVzZXJzIiwiU2hhcmVmaWxlIFVzZXJzIiwiQXBwRHluYW1pY3NfQ3VzdG9tX0Rhc2hib2FyZF9WaWV3ZXIiLCJBcHBEeW5hbWljc19EQl9Nb25pdG9yaW5nX1VzZXIiLCJBcHBEeW5hbWljc19TZXJ2ZXJfTW9uaXRvcmluZ19Vc2VyIiwiQXBwRHluYW1pY3NfUmVhZF9Pbmx5X1VzZXIiXSwiYXV0aF90aW1lIjoiMjAxNy0wMi0xNVQxOToxNzo1OC4yNDNaIiwiYXV0aG1ldGhvZCI6InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlBhc3N3b3JkUHJvdGVjdGVkVHJhbnNwb3J0IiwidmVyIjoiMS4wIiwiYXBwaWQiOiJhZHByb2QifQ.nuw5PwhfF4C8Bu4CWOQd89aMg4mU8mTh5IB7r9QxHvTfrqKY5N7sVVrzVaFqWR-jm_CF8Rfcp-Yc9_2SltIMJo0WRs_JaEIXU9tX4pvudWsA8pC_ZQ5mcov3oVvxqTD61pI5S1u3FDSIFzTzwDhI-PTCsL4av6XnDdtQw9QHhNxkHQW_JYw_ikCq_tJzMtst6IUnSRZUvmH0XRklOY9ts8Mn3xMgb5arEdVobiL8lzUA1vxk-_DYSIDPFAneIgW9Aycoj9O7twoOvfOzrFNL-mgT_sulxaIuvQsSRheHTfUwByIwU1Hkgq02WhJnhGeAjagOsbTkAoZgRh_EHev_DA");
             instance.Configuration.ApiClient.AddToTypeRegistry("svm.hello_bpm.Person", typeof(Person));
             ServerQueriesTasksInstancesPotOwnersGetTest();
         }
@@ -161,12 +160,12 @@ namespace IO.Swagger.Test
             List<string> status = null;
             string user = null;
             var response = instance.ServerQueriesTasksInstancesPotOwnersGet(groups, page, pageSize, sort, sortOrder, status, user);
-            if (response._TaskSummary.Count > 0)
+            if (response.TaskSummary.Count > 0)
             {
-                Console.WriteLine(response._TaskSummary.ElementAt(0));
-                taskInstanceId = response._TaskSummary.ElementAt((0)).TaskId;
+                Console.WriteLine(response.TaskSummary.ElementAt(0));
+                taskInstanceId = response.TaskSummary.ElementAt((0)).TaskId;
             }
-            Assert.IsInstanceOf<TaskSummary> (response, "response is TaskSummary");
+            Assert.IsInstanceOf<TaskSummaries> (response, "response is TaskSummary");
         }
     }
 

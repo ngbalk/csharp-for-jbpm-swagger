@@ -4,14 +4,87 @@ All URIs are relative to *http://10.52.36.21:8080/kie-server/services/rest*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ServerContainersContainerIdTasksTInstanceIdGet**](DefaultApi.md#servercontainerscontaineridtaskstinstanceidget) | **GET** /server/containers/{containerId}/tasks/{tInstanceId} | 
 [**ServerContainersContainerIdTasksTInstanceIdStatesClaimedPut**](DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatesclaimedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/claimed | 
 [**ServerContainersContainerIdTasksTInstanceIdStatesCompletedPut**](DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatescompletedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/completed | 
+[**ServerContainersContainerIdTasksTInstanceIdStatesFailedPut**](DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatesfailedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/failed | 
 [**ServerContainersContainerIdTasksTInstanceIdStatesStartedPut**](DefaultApi.md#servercontainerscontaineridtaskstinstanceidstatesstartedput) | **PUT** /server/containers/{containerId}/tasks/{tInstanceId}/states/started | 
 [**ServerQueriesDefinitionsQueryNameDelete**](DefaultApi.md#serverqueriesdefinitionsquerynamedelete) | **DELETE** /server/queries/definitions/{queryName} | 
 [**ServerQueriesDefinitionsQueryNameFilteredDataPost**](DefaultApi.md#serverqueriesdefinitionsquerynamefiltereddatapost) | **POST** /server/queries/definitions/{queryName}/filtered-data | 
 [**ServerQueriesDefinitionsQueryNamePost**](DefaultApi.md#serverqueriesdefinitionsquerynamepost) | **POST** /server/queries/definitions/{queryName} | 
 [**ServerQueriesTasksInstancesPotOwnersGet**](DefaultApi.md#serverqueriestasksinstancespotownersget) | **GET** /server/queries/tasks/instances/pot-owners | 
+[**ServerQueriesTasksInstancesProcessPInstanceIdGet**](DefaultApi.md#serverqueriestasksinstancesprocesspinstanceidget) | **GET** /server/queries/tasks/instances/process/{pInstanceId} | 
 
+
+<a name="servercontainerscontaineridtaskstinstanceidget"></a>
+# **ServerContainersContainerIdTasksTInstanceIdGet**
+> TaskInstance ServerContainersContainerIdTasksTInstanceIdGet (string containerId, int? tInstanceId, bool? withInputData = null, bool? withOutputData = null)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class ServerContainersContainerIdTasksTInstanceIdGetExample
+    {
+        public void main()
+        {
+            
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
+
+            var apiInstance = new DefaultApi();
+            var containerId = containerId_example;  // string | 
+            var tInstanceId = 56;  // int? | 
+            var withInputData = true;  // bool? |  (optional) 
+            var withOutputData = true;  // bool? |  (optional) 
+
+            try
+            {
+                TaskInstance result = apiInstance.ServerContainersContainerIdTasksTInstanceIdGet(containerId, tInstanceId, withInputData, withOutputData);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.ServerContainersContainerIdTasksTInstanceIdGet: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **string**|  | 
+ **tInstanceId** | **int?**|  | 
+ **withInputData** | **bool?**|  | [optional] 
+ **withOutputData** | **bool?**|  | [optional] 
+
+### Return type
+
+[**TaskInstance**](TaskInstance.md)
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="servercontainerscontaineridtaskstinstanceidstatesclaimedput"></a>
 # **ServerContainersContainerIdTasksTInstanceIdStatesClaimedPut**
@@ -34,9 +107,10 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var containerId = containerId_example;  // string | 
@@ -69,7 +143,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 
@@ -99,9 +173,10 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var containerId = containerId_example;  // string | 
@@ -136,7 +211,73 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="servercontainerscontaineridtaskstinstanceidstatesfailedput"></a>
+# **ServerContainersContainerIdTasksTInstanceIdStatesFailedPut**
+> string ServerContainersContainerIdTasksTInstanceIdStatesFailedPut (string containerId, int? tInstanceId)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class ServerContainersContainerIdTasksTInstanceIdStatesFailedPutExample
+    {
+        public void main()
+        {
+            
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
+
+            var apiInstance = new DefaultApi();
+            var containerId = containerId_example;  // string | 
+            var tInstanceId = 56;  // int? | 
+
+            try
+            {
+                string result = apiInstance.ServerContainersContainerIdTasksTInstanceIdStatesFailedPut(containerId, tInstanceId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.ServerContainersContainerIdTasksTInstanceIdStatesFailedPut: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **string**|  | 
+ **tInstanceId** | **int?**|  | 
+
+### Return type
+
+**string**
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 
@@ -166,9 +307,10 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var containerId = containerId_example;  // string | 
@@ -201,7 +343,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 
@@ -231,9 +373,10 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var queryName = queryName_example;  // string | 
@@ -263,7 +406,7 @@ void (empty response body)
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 
@@ -274,7 +417,7 @@ void (empty response body)
 
 <a name="serverqueriesdefinitionsquerynamefiltereddatapost"></a>
 # **ServerQueriesDefinitionsQueryNameFilteredDataPost**
-> Object ServerQueriesDefinitionsQueryNameFilteredDataPost (string queryName, string mapper, int? pageSize = null, Object body = null)
+> Object ServerQueriesDefinitionsQueryNameFilteredDataPost (string queryName, string mapper, int? pageSize = null, int? page = null, Filter filter = null)
 
 
 
@@ -293,19 +436,21 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var queryName = queryName_example;  // string | 
             var mapper = mapper_example;  // string | 
             var pageSize = 56;  // int? |  (optional) 
-            var body = ;  // Object |  (optional) 
+            var page = 56;  // int? |  (optional) 
+            var filter = new Filter(); // Filter |  (optional) 
 
             try
             {
-                Object result = apiInstance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, pageSize, body);
+                Object result = apiInstance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, pageSize, page, filter);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -324,7 +469,8 @@ Name | Type | Description  | Notes
  **queryName** | **string**|  | 
  **mapper** | **string**|  | 
  **pageSize** | **int?**|  | [optional] 
- **body** | **Object**|  | [optional] 
+ **page** | **int?**|  | [optional] 
+ **filter** | [**Filter**](Filter.md)|  | [optional] 
 
 ### Return type
 
@@ -332,7 +478,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 
@@ -362,9 +508,10 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var queryName = queryName_example;  // string | 
@@ -396,7 +543,7 @@ void (empty response body)
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 
@@ -407,7 +554,7 @@ void (empty response body)
 
 <a name="serverqueriestasksinstancespotownersget"></a>
 # **ServerQueriesTasksInstancesPotOwnersGet**
-> TaskSummary ServerQueriesTasksInstancesPotOwnersGet (List<string> groups = null, int? page = null, int? pageSize = null, string sort = null, bool? sortOrder = null, List<string> status = null, string user = null)
+> TaskSummaries ServerQueriesTasksInstancesPotOwnersGet (List<string> groups = null, int? page = null, int? pageSize = null, string sort = null, bool? sortOrder = null, List<string> status = null, string user = null)
 
 
 
@@ -426,9 +573,10 @@ namespace Example
         public void main()
         {
             
-            // Configure HTTP basic authorization: basicAuth
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
 
             var apiInstance = new DefaultApi();
             var groups = new List<string>(); // List<string> |  (optional) 
@@ -441,7 +589,7 @@ namespace Example
 
             try
             {
-                TaskSummary result = apiInstance.ServerQueriesTasksInstancesPotOwnersGet(groups, page, pageSize, sort, sortOrder, status, user);
+                TaskSummaries result = apiInstance.ServerQueriesTasksInstancesPotOwnersGet(groups, page, pageSize, sort, sortOrder, status, user);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -467,11 +615,81 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TaskSummary**](TaskSummary.md)
+[**TaskSummaries**](TaskSummaries.md)
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth)
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="serverqueriestasksinstancesprocesspinstanceidget"></a>
+# **ServerQueriesTasksInstancesProcessPInstanceIdGet**
+> TaskSummaries ServerQueriesTasksInstancesProcessPInstanceIdGet (int? pInstanceId, int? page = null, int? pageSize = null, string status = null)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class ServerQueriesTasksInstancesProcessPInstanceIdGetExample
+    {
+        public void main()
+        {
+            
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
+
+            var apiInstance = new DefaultApi();
+            var pInstanceId = 56;  // int? | 
+            var page = 56;  // int? |  (optional) 
+            var pageSize = 56;  // int? |  (optional) 
+            var status = status_example;  // string |  (optional) 
+
+            try
+            {
+                TaskSummaries result = apiInstance.ServerQueriesTasksInstancesProcessPInstanceIdGet(pInstanceId, page, pageSize, status);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.ServerQueriesTasksInstancesProcessPInstanceIdGet: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pInstanceId** | **int?**|  | 
+ **page** | **int?**|  | [optional] 
+ **pageSize** | **int?**|  | [optional] 
+ **status** | **string**|  | [optional] 
+
+### Return type
+
+[**TaskSummaries**](TaskSummaries.md)
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
 
 ### HTTP request headers
 

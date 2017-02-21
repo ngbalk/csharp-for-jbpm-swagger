@@ -20,7 +20,6 @@ using NUnit.Framework;
 using IO.Swagger.Client;
 using IO.Swagger.Api;
 using IO.Swagger.Model;
-using Newtonsoft.Json;
 
 namespace IO.Swagger.Test
 {
@@ -42,10 +41,9 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi();
-            instance.Configuration.Username = "kieserver";
-            instance.Configuration.Password = "kieserver1!";
-
+            instance = new DefaultApi("http://localhost:8081/kie-server/services/rest");
+            instance.Configuration.Username = "userA";
+            instance.Configuration.Password = "bpmsuite1!";
         }
 
         /// <summary>
@@ -69,6 +67,43 @@ namespace IO.Swagger.Test
 
         
         /// <summary>
+        /// Test ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet
+        /// </summary>
+        [Test]
+        public void ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGetTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string containerId = null;
+            //int? pInstanceId = null;
+            //var response = instance.ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet(containerId, pInstanceId);
+            //Assert.IsInstanceOf<Object> (response, "response is Object");
+        }
+        
+        /// <summary>
+        /// Test ServerContainersGet
+        /// </summary>
+        [Test]
+        public void ServerContainersGetTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //var response = instance.ServerContainersGet();
+            //Assert.IsInstanceOf<KieContainersStatus> (response, "response is KieContainersStatus");
+        }
+        
+        /// <summary>
+        /// Test ServerContainersIdProcessesInstancesPInstanceIdDelete
+        /// </summary>
+        [Test]
+        public void ServerContainersIdProcessesInstancesPInstanceIdDeleteTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string id = null;
+            //int? pInstanceId = null;
+            //instance.ServerContainersIdProcessesInstancesPInstanceIdDelete(id, pInstanceId);
+            
+        }
+        
+        /// <summary>
         /// Test ServerContainersIdProcessesPIdInstancesPost
         /// </summary>
         [Test]
@@ -88,20 +123,34 @@ namespace IO.Swagger.Test
         [Test]
         public void ServerQueriesContainersIdProcessInstancesGetTest()
         {
-            string id = "SVMContainer";
-            ProcessInstances response =  instance.ServerQueriesContainersIdProcessInstancesGet(id);
-            Assert.IsInstanceOf<ProcessInstances> (response, "response is ProcessInstanceList");
-            Console.WriteLine(response.ProcessInstance[0]);
+            // TODO uncomment below to test the method and replace null with proper value
+            //string id = null;
+            //int? status = null;
+            //var response = instance.ServerQueriesContainersIdProcessInstancesGet(id, status);
+            //Assert.IsInstanceOf<ProcessInstances> (response, "response is ProcessInstances");
+        }
+        
+        /// <summary>
+        /// Test ServerQueriesProcessesInstancesPInstanceIdGet
+        /// </summary>
+        [Test]
+        public void ServerQueriesProcessesInstancesPInstanceIdGetTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //int? pInstanceId = null;
+            //var response = instance.ServerQueriesProcessesInstancesPInstanceIdGet(pInstanceId);
+            //Assert.IsInstanceOf<ProcessInstance> (response, "response is ProcessInstance");
         }
 
         [Test]
-        public void GetContainersTest()
+        public void TestGetProcessDefinitions()
         {
-            KieContainersStatus kcs = instance.ServerContainersGet();
-            Console.WriteLine(kcs.Result.KieContainers.KieContainer[0].Messages[0].Timestamp);
-            Assert.IsInstanceOf<KieContainersStatus>(kcs, "reponse is KieContainerStatus");
+            string regexFilter = "myProcessName";
+            int? page = null;
+            int? pageSize = null;
+            ProcessDefinitions processDefinitions = instance.ServerQueriesProcessesDefinitionsGet(regexFilter,page,pageSize);
         }
-
+        
     }
 
 }

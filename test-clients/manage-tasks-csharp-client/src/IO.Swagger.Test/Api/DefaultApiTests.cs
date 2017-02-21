@@ -43,9 +43,8 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi("http://localhost:8081/kie-server/services/rest");
-            instance.Configuration.Username = "userA";
-            instance.Configuration.Password = "bpmsuite1!";
+            instance = new DefaultApi("http://10.52.36.22:8080/kie-server/services/rest");
+            instance.Configuration.ApiKey.Add("Authorization","eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkF1ZHBIa0tnS2lhZ3Q2U0pxajdVcjFRX3M5USJ9.eyJhdWQiOiJodHRwczovL3d3dy5zZXJ2c21hcnQuc2VydmljZW1hc3Rlci5jb20iLCJpc3MiOiJodHRwOi8vYWRmcy5zZXJ2aWNlbWFzdGVyLmNvbS9hZGZzL3NlcnZpY2VzL3RydXN0IiwiaWF0IjoxNDg3MTg2Mjc4LCJleHAiOjE0ODcyNDAyNzgsIndpbmFjY291bnRuYW1lIjoianJvbGZlIiwiZ3JvdXAiOlsiRG9tYWluIFVzZXJzIiwiU2hhcmVmaWxlIFVzZXJzIiwiQXBwRHluYW1pY3NfQ3VzdG9tX0Rhc2hib2FyZF9WaWV3ZXIiLCJBcHBEeW5hbWljc19EQl9Nb25pdG9yaW5nX1VzZXIiLCJBcHBEeW5hbWljc19TZXJ2ZXJfTW9uaXRvcmluZ19Vc2VyIiwiQXBwRHluYW1pY3NfUmVhZF9Pbmx5X1VzZXIiXSwiYXV0aF90aW1lIjoiMjAxNy0wMi0xNVQxOToxNzo1OC4yNDNaIiwiYXV0aG1ldGhvZCI6InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlBhc3N3b3JkUHJvdGVjdGVkVHJhbnNwb3J0IiwidmVyIjoiMS4wIiwiYXBwaWQiOiJhZHByb2QifQ.nuw5PwhfF4C8Bu4CWOQd89aMg4mU8mTh5IB7r9QxHvTfrqKY5N7sVVrzVaFqWR-jm_CF8Rfcp-Yc9_2SltIMJo0WRs_JaEIXU9tX4pvudWsA8pC_ZQ5mcov3oVvxqTD61pI5S1u3FDSIFzTzwDhI-PTCsL4av6XnDdtQw9QHhNxkHQW_JYw_ikCq_tJzMtst6IUnSRZUvmH0XRklOY9ts8Mn3xMgb5arEdVobiL8lzUA1vxk-_DYSIDPFAneIgW9Aycoj9O7twoOvfOzrFNL-mgT_sulxaIuvQsSRheHTfUwByIwU1Hkgq02WhJnhGeAjagOsbTkAoZgRh_EHev_DA");
         }
 
         /// <summary>
@@ -127,17 +126,96 @@ namespace IO.Swagger.Test
         }
 
         [Test]
-        public void TestGettingQueryResultsAsStrongTypedTaskSummary()
+        public void TestGettingQueryResultsAsStrongTypedTaskInstances()
         {
             string queryName = "getTasks";
-            string mapper = "UserTasksWithVariables";
-            Object body = null;
-            int pageSize = 20;
-            dynamic response =  instance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, pageSize, body);
+            string mapper = Mapper.UserTasksWithVariables.ToString();
+
+            // Build filter
+            Filter filter = new Filter();
+            FilterQueryparams fqp = new FilterQueryparams();
+            // filter on status == Ready
+            fqp.CondColumn = "NAME";
+            fqp.CondOperator = FilterQueryparams.CondOperatorEnum.IN;
+            fqp.CondValues = new List<string> {"Incident"};
+            filter.QueryParams = new List<FilterQueryparams>{fqp};
+
+            int? pageSize = null;
+            int? page = null;
+            dynamic response =  instance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, pageSize, page, filter);
             var serialized = JsonConvert.SerializeObject(response);
-            TaskInstancesWithVars taskInstances = JsonConvert.DeserializeObject(serialized, typeof(TaskInstancesWithVars));
-            Assert.IsInstanceOf<TaskInstancesWithVars> (taskInstances, "response is TaskInstancesWithVars");
-            Console.WriteLine(taskInstances.TaskInstance[0].TaskInputData);
+            TaskInstances taskInstances = JsonConvert.DeserializeObject(serialized, typeof(TaskInstances));
+            Assert.IsInstanceOf<TaskInstances> (taskInstances, "response is TaskInstances");
+            Console.WriteLine(taskInstances.TaskInstance[0]);
+        }
+
+
+        [Test]
+        public void TestGettingTaskSummariesByProcessInstanceId()
+        {
+            int id = 3;
+            TaskSummaries ts = instance.ServerQueriesTasksInstancesProcessPInstanceIdGet(id);
+            Console.WriteLine(ts.TaskSummary[0]);
+        }
+
+        [Test]
+        public void TestGettingTaskWithVarsByFilteringOnSingleTaskInstanceId()
+        {
+            string queryName = "getTasks";
+            string mapper = Mapper.UserTasksWithVariables.ToString();
+
+//            // Build filter
+//            Filter filter = new Filter();
+//            FilterQueryparams fqp = new FilterQueryparams();
+//            // filter on status == Ready
+//            fqp.CondColumn = "TASKID";
+//            fqp.CondOperator = FilterQueryparams.CondOperatorEnum.IN;
+//            fqp.CondValues = new List<string> {"7"};
+//            filter.QueryParams = new List<FilterQueryparams>{fqp};
+
+
+            Filter filter = new Filter();
+            FilterQueryparams fqp = new FilterQueryparams();
+            fqp.CondColumn = "PROCESSID";
+            fqp.CondOperator = FilterQueryparams.CondOperatorEnum.EQUALSTO;
+            fqp.CondValues = new List<string> {"Hello.SayHello"};
+            filter.QueryParams = new List<FilterQueryparams>{fqp};
+            dynamic response =  instance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, 1, 1, filter);
+            var serialized = JsonConvert.SerializeObject(response);
+            TaskInstances taskInstances = JsonConvert.DeserializeObject(serialized, typeof(TaskInstances));
+            Assert.IsInstanceOf<TaskInstances> (taskInstances, "response is TaskInstances");
+            Console.WriteLine(taskInstances.TaskInstance[0]);
+        }
+
+        [Test]
+        public void TestFilteringBasedOnVariableNameAndValue()
+        {
+            string queryName = "getAllTasks";
+            string mapper = "UserTasksWithVariables";
+
+            // Build filter
+            Filter filter = new Filter();
+//            FilterQueryparams fqp1 = new FilterQueryparams();
+//            fqp1.CondColumn = "TVNAME";
+//            fqp1.CondOperator = FilterQueryparams.CondOperatorEnum.EQUALSTO;
+//            fqp1.CondValues = new List<string> {"SupportActivity"};
+
+//            FilterQueryparams fqp2 = new FilterQueryparams();
+//            fqp2.CondColumn = "TVVALUE";
+//            fqp2.CondOperator = FilterQueryparams.CondOperatorEnum.EQUALSTO;
+//            fqp2.CondValues = new List<string> {"XXXXXXX"};
+//            filter.QueryParams = new List<FilterQueryparams>{fqp1,fqp2};
+
+            dynamic response =  instance.ServerQueriesDefinitionsQueryNameFilteredDataPost(queryName, mapper, null, null, filter);
+            var serialized = JsonConvert.SerializeObject(response);
+            TaskInstances taskInstances = JsonConvert.DeserializeObject(serialized, typeof(TaskInstances));
+            Assert.IsInstanceOf<TaskInstances> (taskInstances, "response is TaskInstances");
+            Console.WriteLine(taskInstances.TaskInstance[0]);
+//            foreach (var var in taskInstances.TaskInstance)
+//            {
+//                Console.WriteLine(var.TaskInputData["occupation"]);
+//            }
+
         }
 
         /// <summary>
@@ -146,15 +224,25 @@ namespace IO.Swagger.Test
         [Test]
         public void ServerQueriesDefinitionsQueryNamePostTest()
         {
-            string queryName = "getTasks";
+            string queryName = "getAllTasks";
             Query q = new Query();
-            q.QueryName = "getTasks";
+            q.QueryName = "getAllTasks";
             q.QuerySource = "java:jboss/datasources/ExampleDS";
             q.QueryExpression =
-                "SELECT ti.*, tv.NAME as TVNAME, tv.VALUE as TVVALUE, oe.id AS OEID  FROM AUDITTASKIMPL ti, PEOPLEASSIGNMENTS_POTOWNERS  po, ORGANIZATIONALENTITY  oe, TASKVARIABLEIMPL tv where ti.TASKID = po.TASK_ID  and po.ENTITY_ID  = oe.ID and ti.TASKID = tv.TASKID";
-            q.QueryTarget = "PO_TASK";
+                "SELECT ti.*, tv.NAME as TVNAME, tv.VALUE as TVVALUE FROM AUDITTASKIMPL ti, TASKVARIABLEIMPL tv where ti.TASKID = tv.TASKID";
+            q.QueryTarget = "CUSTOM";
             instance.ServerQueriesDefinitionsQueryNamePost(queryName, q);
+        }
 
+        [Test]
+        public void TestFindTasksWithVars()
+        {
+            var containerName = "someName";
+            var taskInstanceId = 1;
+            var showTaskInputVars = true;
+            var showTaskOutputVars = true;
+            var response = instance.ServerContainersContainerIdTasksTInstanceIdGet(containerName, taskInstanceId, showTaskInputVars, showTaskOutputVars);
+            Console.WriteLine(response.TaskInputData["SupportActivity"]);
         }
 
 
@@ -164,7 +252,7 @@ namespace IO.Swagger.Test
         [Test]
         public void ServerQueriesDefinitionsQueryNameDeleteTest()
         {
-            string queryName = "getTasks";
+            string queryName = "getAllTasks";
             instance.ServerQueriesDefinitionsQueryNameDelete(queryName);
 
         }
