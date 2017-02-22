@@ -37,13 +37,15 @@ namespace IO.Swagger.Model
         /// <param name="ProcessVersion">ProcessVersion.</param>
         /// <param name="Package">Package.</param>
         /// <param name="ContainerId">ContainerId.</param>
-        public ProcessDefinition(string ProcessId = default(string), string ProcessName = default(string), string ProcessVersion = default(string), string Package = default(string), string ContainerId = default(string))
+        /// <param name="ProcessVariables">ProcessVariables.</param>
+        public ProcessDefinition(string ProcessId = default(string), string ProcessName = default(string), string ProcessVersion = default(string), string Package = default(string), string ContainerId = default(string), Dictionary<string, string> ProcessVariables = default(Dictionary<string, string>))
         {
             this.ProcessId = ProcessId;
             this.ProcessName = ProcessName;
             this.ProcessVersion = ProcessVersion;
             this.Package = Package;
             this.ContainerId = ContainerId;
+            this.ProcessVariables = ProcessVariables;
         }
         
         /// <summary>
@@ -72,6 +74,11 @@ namespace IO.Swagger.Model
         [DataMember(Name="container-id", EmitDefaultValue=false)]
         public string ContainerId { get; set; }
         /// <summary>
+        /// Gets or Sets ProcessVariables
+        /// </summary>
+        [DataMember(Name="process-variables", EmitDefaultValue=false)]
+        public Dictionary<string, string> ProcessVariables { get; set; }
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -84,6 +91,7 @@ namespace IO.Swagger.Model
             sb.Append("  ProcessVersion: ").Append(ProcessVersion).Append("\n");
             sb.Append("  Package: ").Append(Package).Append("\n");
             sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
+            sb.Append("  ProcessVariables: ").Append(ProcessVariables).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -144,6 +152,11 @@ namespace IO.Swagger.Model
                     this.ContainerId == other.ContainerId ||
                     this.ContainerId != null &&
                     this.ContainerId.Equals(other.ContainerId)
+                ) && 
+                (
+                    this.ProcessVariables == other.ProcessVariables ||
+                    this.ProcessVariables != null &&
+                    this.ProcessVariables.SequenceEqual(other.ProcessVariables)
                 );
         }
 
@@ -168,6 +181,8 @@ namespace IO.Swagger.Model
                     hash = hash * 59 + this.Package.GetHashCode();
                 if (this.ContainerId != null)
                     hash = hash * 59 + this.ContainerId.GetHashCode();
+                if (this.ProcessVariables != null)
+                    hash = hash * 59 + this.ProcessVariables.GetHashCode();
                 return hash;
             }
         }

@@ -32,6 +32,29 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>ProcessDefinition</returns>
+        ProcessDefinition ServerContainersContainerIdProcessesDefinitionsProcessIdGet (string containerId, string processId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>ApiResponse of ProcessDefinition</returns>
+        ApiResponse<ProcessDefinition> ServerContainersContainerIdProcessesDefinitionsProcessIdGetWithHttpInfo (string containerId, string processId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
         /// <param name="pInstanceId"></param>
         /// <returns>Object</returns>
         Object ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet (string containerId, int? pInstanceId);
@@ -144,31 +167,6 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>ProcessDefinitions</returns>
-        ProcessDefinitions ServerQueriesProcessesDefinitionsGet (string filter = null, int? page = null, int? pageSize = null);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>ApiResponse of ProcessDefinitions</returns>
-        ApiResponse<ProcessDefinitions> ServerQueriesProcessesDefinitionsGetWithHttpInfo (string filter = null, int? page = null, int? pageSize = null);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="pInstanceId"></param>
         /// <returns>ProcessInstance</returns>
         ProcessInstance ServerQueriesProcessesInstancesPInstanceIdGet (int? pInstanceId);
@@ -185,6 +183,29 @@ namespace IO.Swagger.Api
         ApiResponse<ProcessInstance> ServerQueriesProcessesInstancesPInstanceIdGetWithHttpInfo (int? pInstanceId);
         #endregion Synchronous Operations
         #region Asynchronous Operations
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>Task of ProcessDefinition</returns>
+        System.Threading.Tasks.Task<ProcessDefinition> ServerContainersContainerIdProcessesDefinitionsProcessIdGetAsync (string containerId, string processId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>Task of ApiResponse (ProcessDefinition)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ProcessDefinition>> ServerContainersContainerIdProcessesDefinitionsProcessIdGetAsyncWithHttpInfo (string containerId, string processId);
         /// <summary>
         /// 
         /// </summary>
@@ -298,31 +319,6 @@ namespace IO.Swagger.Api
         /// <param name="status"> (optional)</param>
         /// <returns>Task of ApiResponse (ProcessInstances)</returns>
         System.Threading.Tasks.Task<ApiResponse<ProcessInstances>> ServerQueriesContainersIdProcessInstancesGetAsyncWithHttpInfo (string id, int? status = null);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>Task of ProcessDefinitions</returns>
-        System.Threading.Tasks.Task<ProcessDefinitions> ServerQueriesProcessesDefinitionsGetAsync (string filter = null, int? page = null, int? pageSize = null);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>Task of ApiResponse (ProcessDefinitions)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProcessDefinitions>> ServerQueriesProcessesDefinitionsGetAsyncWithHttpInfo (string filter = null, int? page = null, int? pageSize = null);
         /// <summary>
         /// 
         /// </summary>
@@ -454,6 +450,176 @@ namespace IO.Swagger.Api
         public void AddDefaultHeader(string key, string value)
         {
             this.Configuration.AddDefaultHeader(key, value);
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>ProcessDefinition</returns>
+        public ProcessDefinition ServerContainersContainerIdProcessesDefinitionsProcessIdGet (string containerId, string processId)
+        {
+             ApiResponse<ProcessDefinition> localVarResponse = ServerContainersContainerIdProcessesDefinitionsProcessIdGetWithHttpInfo(containerId, processId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>ApiResponse of ProcessDefinition</returns>
+        public ApiResponse< ProcessDefinition > ServerContainersContainerIdProcessesDefinitionsProcessIdGetWithHttpInfo (string containerId, string processId)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling DefaultApi->ServerContainersContainerIdProcessesDefinitionsProcessIdGet");
+            // verify the required parameter 'processId' is set
+            if (processId == null)
+                throw new ApiException(400, "Missing required parameter 'processId' when calling DefaultApi->ServerContainersContainerIdProcessesDefinitionsProcessIdGet");
+
+            var localVarPath = "/server/containers/{containerId}/processes/definitions/{processId}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+            if (processId != null) localVarPathParams.Add("processId", Configuration.ApiClient.ParameterToString(processId)); // path parameter
+
+            // authentication (tokenAuth) required
+            if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("Authorization")))
+            {
+                localVarHeaderParams["Authorization"] = Configuration.GetApiKeyWithPrefix("Authorization");
+            }
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ServerContainersContainerIdProcessesDefinitionsProcessIdGet", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ProcessDefinition>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ProcessDefinition) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessDefinition)));
+            
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>Task of ProcessDefinition</returns>
+        public async System.Threading.Tasks.Task<ProcessDefinition> ServerContainersContainerIdProcessesDefinitionsProcessIdGetAsync (string containerId, string processId)
+        {
+             ApiResponse<ProcessDefinition> localVarResponse = await ServerContainersContainerIdProcessesDefinitionsProcessIdGetAsyncWithHttpInfo(containerId, processId);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="containerId"></param>
+        /// <param name="processId"></param>
+        /// <returns>Task of ApiResponse (ProcessDefinition)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ProcessDefinition>> ServerContainersContainerIdProcessesDefinitionsProcessIdGetAsyncWithHttpInfo (string containerId, string processId)
+        {
+            // verify the required parameter 'containerId' is set
+            if (containerId == null)
+                throw new ApiException(400, "Missing required parameter 'containerId' when calling DefaultApi->ServerContainersContainerIdProcessesDefinitionsProcessIdGet");
+            // verify the required parameter 'processId' is set
+            if (processId == null)
+                throw new ApiException(400, "Missing required parameter 'processId' when calling DefaultApi->ServerContainersContainerIdProcessesDefinitionsProcessIdGet");
+
+            var localVarPath = "/server/containers/{containerId}/processes/definitions/{processId}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json", 
+                "application/xml"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (containerId != null) localVarPathParams.Add("containerId", Configuration.ApiClient.ParameterToString(containerId)); // path parameter
+            if (processId != null) localVarPathParams.Add("processId", Configuration.ApiClient.ParameterToString(processId)); // path parameter
+
+            // authentication (tokenAuth) required
+            if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("Authorization")))
+            {
+                localVarHeaderParams["Authorization"] = Configuration.GetApiKeyWithPrefix("Authorization");
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ServerContainersContainerIdProcessesDefinitionsProcessIdGet", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ProcessDefinition>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ProcessDefinition) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessDefinition)));
+            
         }
 
         /// <summary>
@@ -1287,170 +1453,6 @@ namespace IO.Swagger.Api
             return new ApiResponse<ProcessInstances>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ProcessInstances) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessInstances)));
-            
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>ProcessDefinitions</returns>
-        public ProcessDefinitions ServerQueriesProcessesDefinitionsGet (string filter = null, int? page = null, int? pageSize = null)
-        {
-             ApiResponse<ProcessDefinitions> localVarResponse = ServerQueriesProcessesDefinitionsGetWithHttpInfo(filter, page, pageSize);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>ApiResponse of ProcessDefinitions</returns>
-        public ApiResponse< ProcessDefinitions > ServerQueriesProcessesDefinitionsGetWithHttpInfo (string filter = null, int? page = null, int? pageSize = null)
-        {
-
-            var localVarPath = "/server/queries/processes/definitions";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-                "application/json", 
-                "application/xml"
-            };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json", 
-                "application/xml"
-            };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            // set "format" to json by default
-            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
-            localVarPathParams.Add("format", "json");
-            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
-            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
-            if (pageSize != null) localVarQueryParams.Add("pageSize", Configuration.ApiClient.ParameterToString(pageSize)); // query parameter
-
-            // authentication (tokenAuth) required
-            if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("Authorization")))
-            {
-                localVarHeaderParams["Authorization"] = Configuration.GetApiKeyWithPrefix("Authorization");
-            }
-
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("ServerQueriesProcessesDefinitionsGet", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<ProcessDefinitions>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ProcessDefinitions) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessDefinitions)));
-            
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>Task of ProcessDefinitions</returns>
-        public async System.Threading.Tasks.Task<ProcessDefinitions> ServerQueriesProcessesDefinitionsGetAsync (string filter = null, int? page = null, int? pageSize = null)
-        {
-             ApiResponse<ProcessDefinitions> localVarResponse = await ServerQueriesProcessesDefinitionsGetAsyncWithHttpInfo(filter, page, pageSize);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="filter"> (optional)</param>
-        /// <param name="page"> (optional)</param>
-        /// <param name="pageSize"> (optional)</param>
-        /// <returns>Task of ApiResponse (ProcessDefinitions)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ProcessDefinitions>> ServerQueriesProcessesDefinitionsGetAsyncWithHttpInfo (string filter = null, int? page = null, int? pageSize = null)
-        {
-
-            var localVarPath = "/server/queries/processes/definitions";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-                "application/json", 
-                "application/xml"
-            };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json", 
-                "application/xml"
-            };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            // set "format" to json by default
-            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
-            localVarPathParams.Add("format", "json");
-            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
-            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
-            if (pageSize != null) localVarQueryParams.Add("pageSize", Configuration.ApiClient.ParameterToString(pageSize)); // query parameter
-
-            // authentication (tokenAuth) required
-            if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("Authorization")))
-            {
-                localVarHeaderParams["Authorization"] = Configuration.GetApiKeyWithPrefix("Authorization");
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("ServerQueriesProcessesDefinitionsGet", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<ProcessDefinitions>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ProcessDefinitions) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProcessDefinitions)));
             
         }
 

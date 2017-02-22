@@ -14,7 +14,7 @@ securityDefinitions:
     in: header
 paths:
 
-  /server/queries/processes/definitions:
+  /server/containers/{containerId}/processes/definitions/{processId}:
     get:
       security:
         - tokenAuth: []
@@ -26,17 +26,13 @@ paths:
         - application/xml
       parameters:
         - type: string
-          name: filter
-          in: query
-          required: false
-        - type: integer
-          name: page
-          in: query
-          required: false
-        - type: integer
-          name: pageSize
-          in: query
-          required: false
+          name: containerId
+          in: path
+          required: true
+        - type: string
+          name: processId
+          in: path
+          required: true
       responses:
         '200':
           description: OK
@@ -46,7 +42,7 @@ paths:
             Content-Language:
               type: string
           schema:
-            $ref: '#/definitions/ProcessDefinitions'
+            $ref: '#/definitions/ProcessDefinition'
               
         '201':
           description: Created
@@ -384,14 +380,6 @@ definitions:
         type: string
       parent-instance-id:
         type: integer
-      
-  ProcessDefinitions:
-    type: object
-    properties:
-      processes:
-        type: array
-        items:
-          $ref: "#/definitions/ProcessDefinition"
           
   ProcessDefinition:
     type: object
@@ -406,3 +394,7 @@ definitions:
         type: string
       container-id:
         type: string
+      process-variables:
+        type: object
+        additionalProperties:
+            type: string

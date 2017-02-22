@@ -4,14 +4,80 @@ All URIs are relative to *http://10.52.36.21:8080/kie-server/services/rest*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ServerContainersContainerIdProcessesDefinitionsProcessIdGet**](DefaultApi.md#servercontainerscontaineridprocessesdefinitionsprocessidget) | **GET** /server/containers/{containerId}/processes/definitions/{processId} | 
 [**ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet**](DefaultApi.md#servercontainerscontaineridprocessesinstancespinstanceidvariablesget) | **GET** /server/containers/{containerId}/processes/instances/{pInstanceId}/variables | 
 [**ServerContainersGet**](DefaultApi.md#servercontainersget) | **GET** /server/containers | 
 [**ServerContainersIdProcessesInstancesPInstanceIdDelete**](DefaultApi.md#servercontainersidprocessesinstancespinstanceiddelete) | **DELETE** /server/containers/{id}/processes/instances/{pInstanceId} | 
 [**ServerContainersIdProcessesPIdInstancesPost**](DefaultApi.md#servercontainersidprocessespidinstancespost) | **POST** /server/containers/{id}/processes/{pId}/instances | 
 [**ServerQueriesContainersIdProcessInstancesGet**](DefaultApi.md#serverqueriescontainersidprocessinstancesget) | **GET** /server/queries/containers/{id}/process/instances | 
-[**ServerQueriesProcessesDefinitionsGet**](DefaultApi.md#serverqueriesprocessesdefinitionsget) | **GET** /server/queries/processes/definitions | 
 [**ServerQueriesProcessesInstancesPInstanceIdGet**](DefaultApi.md#serverqueriesprocessesinstancespinstanceidget) | **GET** /server/queries/processes/instances/{pInstanceId} | 
 
+
+<a name="servercontainerscontaineridprocessesdefinitionsprocessidget"></a>
+# **ServerContainersContainerIdProcessesDefinitionsProcessIdGet**
+> ProcessDefinition ServerContainersContainerIdProcessesDefinitionsProcessIdGet (string containerId, string processId)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class ServerContainersContainerIdProcessesDefinitionsProcessIdGetExample
+    {
+        public void main()
+        {
+            
+            // Configure API key authorization: tokenAuth
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
+
+            var apiInstance = new DefaultApi();
+            var containerId = containerId_example;  // string | 
+            var processId = processId_example;  // string | 
+
+            try
+            {
+                ProcessDefinition result = apiInstance.ServerContainersContainerIdProcessesDefinitionsProcessIdGet(containerId, processId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.ServerContainersContainerIdProcessesDefinitionsProcessIdGet: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **containerId** | **string**|  | 
+ **processId** | **string**|  | 
+
+### Return type
+
+[**ProcessDefinition**](ProcessDefinition.md)
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="servercontainerscontaineridprocessesinstancespinstanceidvariablesget"></a>
 # **ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet**
@@ -326,74 +392,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ProcessInstances**](ProcessInstances.md)
-
-### Authorization
-
-[tokenAuth](../README.md#tokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="serverqueriesprocessesdefinitionsget"></a>
-# **ServerQueriesProcessesDefinitionsGet**
-> ProcessDefinitions ServerQueriesProcessesDefinitionsGet (string filter = null, int? page = null, int? pageSize = null)
-
-
-
-### Example
-```csharp
-using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class ServerQueriesProcessesDefinitionsGetExample
-    {
-        public void main()
-        {
-            
-            // Configure API key authorization: tokenAuth
-            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
-
-            var apiInstance = new DefaultApi();
-            var filter = filter_example;  // string |  (optional) 
-            var page = 56;  // int? |  (optional) 
-            var pageSize = 56;  // int? |  (optional) 
-
-            try
-            {
-                ProcessDefinitions result = apiInstance.ServerQueriesProcessesDefinitionsGet(filter, page, pageSize);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.ServerQueriesProcessesDefinitionsGet: " + e.Message );
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **filter** | **string**|  | [optional] 
- **page** | **int?**|  | [optional] 
- **pageSize** | **int?**|  | [optional] 
-
-### Return type
-
-[**ProcessDefinitions**](ProcessDefinitions.md)
 
 ### Authorization
 

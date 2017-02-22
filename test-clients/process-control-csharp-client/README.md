@@ -76,16 +76,16 @@ namespace Example
 
             var apiInstance = new DefaultApi();
             var containerId = containerId_example;  // string | 
-            var pInstanceId = 56;  // int? | 
+            var processId = processId_example;  // string | 
 
             try
             {
-                Object result = apiInstance.ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet(containerId, pInstanceId);
+                ProcessDefinition result = apiInstance.ServerContainersContainerIdProcessesDefinitionsProcessIdGet(containerId, processId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.ServerContainersContainerIdProcessesDefinitionsProcessIdGet: " + e.Message );
             }
         }
     }
@@ -99,12 +99,12 @@ All URIs are relative to *http://10.52.36.21:8080/kie-server/services/rest*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**ServerContainersContainerIdProcessesDefinitionsProcessIdGet**](docs/DefaultApi.md#servercontainerscontaineridprocessesdefinitionsprocessidget) | **GET** /server/containers/{containerId}/processes/definitions/{processId} | 
 *DefaultApi* | [**ServerContainersContainerIdProcessesInstancesPInstanceIdVariablesGet**](docs/DefaultApi.md#servercontainerscontaineridprocessesinstancespinstanceidvariablesget) | **GET** /server/containers/{containerId}/processes/instances/{pInstanceId}/variables | 
 *DefaultApi* | [**ServerContainersGet**](docs/DefaultApi.md#servercontainersget) | **GET** /server/containers | 
 *DefaultApi* | [**ServerContainersIdProcessesInstancesPInstanceIdDelete**](docs/DefaultApi.md#servercontainersidprocessesinstancespinstanceiddelete) | **DELETE** /server/containers/{id}/processes/instances/{pInstanceId} | 
 *DefaultApi* | [**ServerContainersIdProcessesPIdInstancesPost**](docs/DefaultApi.md#servercontainersidprocessespidinstancespost) | **POST** /server/containers/{id}/processes/{pId}/instances | 
 *DefaultApi* | [**ServerQueriesContainersIdProcessInstancesGet**](docs/DefaultApi.md#serverqueriescontainersidprocessinstancesget) | **GET** /server/queries/containers/{id}/process/instances | 
-*DefaultApi* | [**ServerQueriesProcessesDefinitionsGet**](docs/DefaultApi.md#serverqueriesprocessesdefinitionsget) | **GET** /server/queries/processes/definitions | 
 *DefaultApi* | [**ServerQueriesProcessesInstancesPInstanceIdGet**](docs/DefaultApi.md#serverqueriesprocessesinstancespinstanceidget) | **GET** /server/queries/processes/instances/{pInstanceId} | 
 
 
@@ -118,7 +118,6 @@ Class | Method | HTTP request | Description
  - [Model.KieContainersStatusResult](docs/KieContainersStatusResult.md)
  - [Model.KieContainersStatusResultKiecontainers](docs/KieContainersStatusResultKiecontainers.md)
  - [Model.ProcessDefinition](docs/ProcessDefinition.md)
- - [Model.ProcessDefinitions](docs/ProcessDefinitions.md)
  - [Model.ProcessInstance](docs/ProcessInstance.md)
  - [Model.ProcessInstances](docs/ProcessInstances.md)
 
