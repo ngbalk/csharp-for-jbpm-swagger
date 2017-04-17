@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using RestSharp;
 using NUnit.Framework;
 
@@ -41,8 +42,27 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi("http://10.52.36.21:8080/kie-server/services/rest");
-            instance.Configuration.ApiKey.Add("Authorization","eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkF1ZHBIa0tnS2lhZ3Q2U0pxajdVcjFRX3M5USJ9.eyJhdWQiOiJodHRwczovL3d3dy5zZXJ2c21hcnQuc2VydmljZW1hc3Rlci5jb20iLCJpc3MiOiJodHRwOi8vYWRmcy5zZXJ2aWNlbWFzdGVyLmNvbS9hZGZzL3NlcnZpY2VzL3RydXN0IiwiaWF0IjoxNDg3MTg2Mjc4LCJleHAiOjE0ODcyNDAyNzgsIndpbmFjY291bnRuYW1lIjoianJvbGZlIiwiZ3JvdXAiOlsiRG9tYWluIFVzZXJzIiwiU2hhcmVmaWxlIFVzZXJzIiwiQXBwRHluYW1pY3NfQ3VzdG9tX0Rhc2hib2FyZF9WaWV3ZXIiLCJBcHBEeW5hbWljc19EQl9Nb25pdG9yaW5nX1VzZXIiLCJBcHBEeW5hbWljc19TZXJ2ZXJfTW9uaXRvcmluZ19Vc2VyIiwiQXBwRHluYW1pY3NfUmVhZF9Pbmx5X1VzZXIiXSwiYXV0aF90aW1lIjoiMjAxNy0wMi0xNVQxOToxNzo1OC4yNDNaIiwiYXV0aG1ldGhvZCI6InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlBhc3N3b3JkUHJvdGVjdGVkVHJhbnNwb3J0IiwidmVyIjoiMS4wIiwiYXBwaWQiOiJhZHByb2QifQ.nuw5PwhfF4C8Bu4CWOQd89aMg4mU8mTh5IB7r9QxHvTfrqKY5N7sVVrzVaFqWR-jm_CF8Rfcp-Yc9_2SltIMJo0WRs_JaEIXU9tX4pvudWsA8pC_ZQ5mcov3oVvxqTD61pI5S1u3FDSIFzTzwDhI-PTCsL4av6XnDdtQw9QHhNxkHQW_JYw_ikCq_tJzMtst6IUnSRZUvmH0XRklOY9ts8Mn3xMgb5arEdVobiL8lzUA1vxk-_DYSIDPFAneIgW9Aycoj9O7twoOvfOzrFNL-mgT_sulxaIuvQsSRheHTfUwByIwU1Hkgq02WhJnhGeAjagOsbTkAoZgRh_EHev_DA");
+            instance = new DefaultApi("https://aws01bpms03t.bizt.est.svmt.com:8443/kie-server/services/rest");
+//            instance = new DefaultApi("https://10.52.36.22:8443/kie-server/services/rest");
+//            instance = new DefaultApi("http://10.52.36.21:8080/kie-server/services/rest");
+            instance.Configuration.ApiKey.Add("Authorization","eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IldaVUNaQXZzYXZoVmlUN1VNZkFOS2JUOTIxWSJ9.eyJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQyMDAiLCJpc3MiOiJodHRwOi8vaHlicmlkLnN2bWxhYnMuY29tL2FkZnMvc2VydmljZXMvdHJ1c3QiLCJpYXQiOjE0ODg0MDIxMTUsImV4cCI6MTQ4ODQwNTcxNSwid2luYWNjb3VudG5hbWUiOiJqb2RhbHRvbiIsImdyb3VwIjpbIkRvbWFpbiBVc2VycyIsIk1pZGRsZXdhcmUgQWRtaW5zIiwiU2VydlNtYXJ0IERldmVsb3BlcnMiLCJTUyBXaXNjb25zaW4gVGVhbSIsIldvcmtmbG93X1Rlc3RlcnMiXSwiYXV0aF90aW1lIjoiMjAxNy0wMy0wMVQyMTowMTo1NC4wNzRaIiwiYXV0aG1ldGhvZCI6InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlBhc3N3b3JkUHJvdGVjdGVkVHJhbnNwb3J0IiwidmVyIjoiMS4wIiwiYXBwaWQiOiJsb2NhbC1hZ2VudGRlc2t0b3AifQ.booIRJr0D22c3UtBMaekskzdLWrt-GCTX3O0YJpJVtKn-vZDDKAHKm_88rr-FGUwCDx1NH_-V-UTWbRxhJqfoEsb9lCkifdG8eNxsh4XKkxJ6hTZpVwamKmEogQdD9LjiyyEsDRECEA3MBT6QF0kz-jSuOIvIIleUgHDBMIepfdLwSFzaHiQwHduhjSZ-IDnKl27C0fQKECxx9E7webz9ht-hhYr74hJMkw9DfuLLzoqMNYWnpN4SWjX45fPWQV6-N8fnzF0fctF7uDVFR2wtljxXTEa6cKunqfCYj-KVE3GfqbmmYAL9OdTs50YURYMGwk-QHKGhCskcTgISzapVQ");
+//            instance.Configuration.ApiKey.Add("Authorization","Basic dXNlckE6YnBtc3VpdGUxIQ==");
+
+//            X509Store userCaStore = new X509Store(StoreName.Root, StoreLocation.CurrentUser);
+//            Console.WriteLine(userCaStore.Certificates.Count);
+
+//            X509Certificate2 certificate1 = new X509Certificate2("/Users/nbalkiss/Documents/ServiceMaster/ssl/aws01bpms03t.cer","bpmsuite1!");
+//            X509Certificate2 certificate2 = new X509Certificate2("/Users/nbalkiss/Documents/ServiceMaster/ssl/svmserversubca.cer","bpmsuite1!");
+//            X509Certificate2 certificate3 = new X509Certificate2("/Users/nbalkiss/Documents/ServiceMaster/ssl/svminternalsubca.cer","bpmsuite1!");
+//            X509Certificate2 certificate4 = new X509Certificate2("/Users/nbalkiss/Documents/ServiceMaster/ssl/svmrootca.cer","");
+//            Console.WriteLine(certificate4.Subject);
+
+//            X509Chain chain = new X509Chain();
+//            chain.Build(certificate1);
+//            Console.WriteLine(chain.ChainElements.Count);
+
+//            instance.Configuration.ApiClient.RestClient.ClientCertificates = new X509Certificate2Collection(){certificate4};
+//            Console.WriteLine(instance.Configuration.ApiClient.RestClient.ClientCertificates[0].Issuer);
         }
 
         /// <summary>
@@ -85,8 +105,9 @@ namespace IO.Swagger.Test
         public void ServerContainersGetTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //var response = instance.ServerContainersGet();
-            //Assert.IsInstanceOf<KieContainersStatus> (response, "response is KieContainersStatus");
+            var response = instance.ServerContainersGet();
+            Console.WriteLine(response.Result.KieContainers.KieContainer.Count);
+            Assert.IsInstanceOf<KieContainersStatus> (response, "response is KieContainersStatus");
         }
         
         /// <summary>
@@ -123,10 +144,16 @@ namespace IO.Swagger.Test
         public void ServerQueriesContainersIdProcessInstancesGetTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //string id = null;
-            //int? status = null;
-            //var response = instance.ServerQueriesContainersIdProcessInstancesGet(id, status);
-            //Assert.IsInstanceOf<ProcessInstances> (response, "response is ProcessInstances");
+            string id = "test:firststep:1.0.7";
+            int? status = 1;
+            var response = instance.ServerQueriesContainersIdProcessInstancesGet(id, status);
+//            foreach (var pi in response.ProcessInstance)
+//            {
+//                Console.WriteLine(pi.ProcessInstanceId);
+//                instance.ServerContainersIdProcessesInstancesPInstanceIdDelete("test:firststep:1.0.7",pi.ProcessInstanceId);
+//
+//            }
+            Assert.IsInstanceOf<ProcessInstances> (response, "response is ProcessInstances");
         }
         
         /// <summary>
@@ -142,11 +169,19 @@ namespace IO.Swagger.Test
         }
 
         [Test]
+        public void TestDeleteProcess()
+        {
+            instance.ServerContainersIdProcessesInstancesPInstanceIdDelete("test:firststep:1.0.7",27);
+        }
+
+        [Test]
         public void TestGetProcessDefinition()
         {
             var containerId = "test:firststep:1.0.4";
             var processId = "Hello.SayHello";
             ProcessDefinition processDefinition = instance.ServerContainersContainerIdProcessesDefinitionsProcessIdGet(containerId,processId);
+            instance.ServerContainersIdProcessesInstancesPInstanceIdDelete("containerId",1111);
+
         }
         
     }

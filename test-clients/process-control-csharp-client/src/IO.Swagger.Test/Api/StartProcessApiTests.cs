@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using RestSharp;
 using NUnit.Framework;
 
@@ -42,7 +43,6 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new DefaultApi();
             instance.Configuration.Username = "kieserver";
             instance.Configuration.Password = "kieserver1!";
             instance.Configuration.ApiClient.AddToTypeRegistry("svm.hello_bpm.Person",typeof(Person));

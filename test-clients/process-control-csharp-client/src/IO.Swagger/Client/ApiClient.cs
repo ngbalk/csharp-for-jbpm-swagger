@@ -202,6 +202,7 @@ namespace IO.Swagger.Client
             RestClient.UserAgent = Configuration.UserAgent;
 
             InterceptRequest(request);
+
             var response = RestClient.Execute(request);
             InterceptResponse(request, response);
 
