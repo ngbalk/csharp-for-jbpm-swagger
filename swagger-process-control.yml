@@ -3,7 +3,7 @@ swagger: '2.0'
 info:
   version: 1.0-SNAPSHOT
   title: KieServerProcessManager
-host: 10.52.36.21:8080
+host: localhost:8081
 basePath: /kie-server/services/rest
 schemes:
   - http
@@ -13,6 +13,65 @@ securityDefinitions:
     name: Authorization
     in: header
 paths:
+
+  /server/containers/{containerId}/processes/instances/{pInstanceId}/signal/{signalName}:
+    post:
+      security:
+        - tokenAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: containerId
+          in: path
+          required: true
+        - type: string
+          name: pInstanceId
+          in: path
+          required: true
+        - type: string
+          name: signalName
+          in: path
+          required: true
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
 
   /server/containers/{containerId}/processes/definitions/{processId}:
     get:
@@ -287,6 +346,39 @@ paths:
             type: object
 
 definitions:
+
+  ServiceResponse:
+    type: object
+    properties:
+      Message:
+        type: string
+      WorkerName:
+        type: string
+      Data:
+        type: object
+        additionalProperties:
+          type: string
+      WorkerCallState:
+        type: object
+        properties:
+          Completed:
+            type: boolean
+          Errors:
+            type: array
+            items:
+              $ref: "#/definitions/WorkerError"
+
+  WorkerError:
+    type: object
+    properties:
+      ErrorID:
+        type: string
+      Description:
+        type: string
+      Severity:
+        type: string
+        enum: [Warning, Severe, Critical]
+
   KieContainersStatus:
     type: object
     properties:
