@@ -358,6 +358,15 @@ definitions:
         type: object
         additionalProperties:
           type: string
+      SignalInstanceInfo:
+        type: object
+        properties:
+          ContainerId:
+            type: string
+          ProcessInstanceId:
+            type: string
+          SignalName:
+            type: string
       WorkerCallState:
         type: object
         properties:
