@@ -122,6 +122,50 @@ paths:
           schema:
             type: string
 
+  /server/queries/containers/{containerId}/processes/definitions/:
+    get:
+      security:
+        - tokenAuth: []
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - type: string
+          name: containerId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            $ref: '#/definitions/ProcessDefinitions'
+        '201':
+          description: Created
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Encoding:
+              type: string
+            Content-Language:
+              type: string
+          schema:
+            type: string
+
   /server/containers/{id}/processes/{pId}/instances:
     post:
       security:
@@ -481,7 +525,15 @@ definitions:
         type: string
       parent-instance-id:
         type: integer
-          
+
+  ProcessDefinitions:
+    type: object
+    properties:
+      processes:
+        type: array
+        items:
+          $ref: "#/definitions/ProcessDefinition"
+
   ProcessDefinition:
     type: object
     properties:
