@@ -604,3 +604,21 @@ definitions:
         type: object
         additionalProperties:
           type: string
+
+  PaymentData:
+    type: object
+    properties:
+      PaymentId:
+        type: string
+      RetryId:
+        type: string
+
+  IncidentData:
+    type: object
+    properties:
+      SupportActivityId:
+        type: string
+      OrganizationId:
+        type: string
+      IncidentType:
+        type: string
