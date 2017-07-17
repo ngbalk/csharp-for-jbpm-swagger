@@ -486,6 +486,10 @@ definitions:
         type: string
       order-asc:
         type: boolean
+      result-column-mapping:
+        type: object
+        additionalProperties:
+          type: string
       query-params:
         type: array
         items:
