@@ -2,10 +2,10 @@ swagger: '2.0'
 info:
   version: 1.0-SNAPSHOT
   title: KieServerTaskManager
-host: 10.52.36.21:8080
+host: kie-dev.svmintranet.com
 basePath: /kie-server/services/rest
 schemes:
-  - http
+  - https
 securityDefinitions:
   tokenAuth:
     type: apiKey

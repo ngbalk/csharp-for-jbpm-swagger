@@ -552,12 +552,22 @@ public class CustomObjectTypeSerializer : JsonConverter
             serializer.Serialize(writer, millisSinceEpoch);
         }
         // handle custom object serialization
+        // UPDATED to handle serialization recursively on July 18th, 2017
         else
         {
             var attribute = typeRegistry[value.GetType()];
-            JObject obj = new JObject();
-            obj.Add(attribute,JToken.FromObject(value));
-            obj.WriteTo(writer);
+            JObject root = new JObject();
+            JObject children = new JObject();
+            foreach (var property in value.GetType().GetProperties())
+            {
+                object propertValue = property.GetValue(value, null);
+                if (propertValue != null)
+                {
+                    children.Add(property.Name, JToken.FromObject(propertValue, serializer));
+                }
+            }
+            root.Add(attribute, children);
+            root.WriteTo(writer);
         }
     }
 
