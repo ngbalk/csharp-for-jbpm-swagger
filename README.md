@@ -1,4 +1,4 @@
-# Swagger client generator for csharp clients for Red Hat JBoss Execution Server
+# Swagger client generator for csharp clients for Red Hat JBoss Execution Server V1
 
 Use this project to generate csharp clients for interacting with the KieServer in common ways:
 
